@@ -32,7 +32,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Nodes Configuration"
+                        "default": "TIBCO JasperReports Nodes Configuration"
                     },
                     "Parameters": [
                         "WorkloadNodesMinSize",
@@ -46,7 +46,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Database Configuration"
+                        "default": "Database Configuration"
                     },
                     "Parameters": [
                         "RDSDbSize",
@@ -108,16 +108,16 @@
                     "default": "VPC CIDR"
                 },
                 "WorkloadInstanceType": {
-                    "default": "Workload Servers Instance Type"
+                    "default": "Servers Instance Type"
                 },
                 "WorkloadNodesDesiredCapacity": {
-                    "default": "Workload Nodes Desired Capacity"
+                    "default": "Nodes Desired Capacity"
                 },
                 "WorkloadNodesMaxSize": {
-                    "default": "Workload Nodes Max Size"
+                    "default": "Nodes Max Size"
                 },
                 "WorkloadNodesMinSize": {
-                    "default": "Workload Nodes Min Size"
+                    "default": "Nodes Min Size"
                 },
                 "NewBucket" : {
                     "default" : "Create S3 Bucket for License and Customization?"
@@ -269,12 +269,12 @@
             ],
             "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "EC2 instance type for the Workload instances",
+            "Description": "EC2 instance type for the TIBCO JasperReports instances",
             "Type": "String"
         },
         "WorkloadNodesDesiredCapacity": {
             "Default": "2",
-            "Description": "The desired capacity for the Workload nodes Auto Scaling group",
+            "Description": "The desired capacity for the Auto Scaling group",
             "Type": "String"
         },
         "WorkloadNodesMaxSize": {
@@ -562,7 +562,7 @@
     },
     "Outputs": {
       "GettingStartedPublicURL": {
-        "Description": "Jasperserver Getting started URL",
+        "Description": "TIBCO JasperReports Getting started URL",
         "Value": {
           "Fn::GetAtt": [
             "WorkloadStackClustered",
@@ -580,7 +580,7 @@
         }
       },
       "AutoscalingGroup" : {
-        "Description" : "JRS Autoscaling Group",
+        "Description" : "TIBCO JasperReports Autoscaling Group",
         "Value": {
           "Fn::GetAtt": [
             "WorkloadStackClustered",

@@ -28,7 +28,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Nodes Configuration"
+                        "default": "TIBCO JasperReports Nodes Configuration"
                     },
                     "Parameters": [
                         "WorkloadNodesMinSize",
@@ -41,7 +41,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Database Configuration"
+                        "default": "Database Configuration"
                     },
                     "Parameters": [
                         "RDSAddress",
@@ -79,16 +79,16 @@
                     "default": "VPC ID"
                 },
                 "WorkloadInstanceType": {
-                    "default": "Workload Servers Instance Type"
+                    "default": "Servers Instance Type"
                 },
                 "WorkloadNodesDesiredCapacity": {
-                    "default": "Workload Nodes Desired Capacity"
+                    "default": "Nodes Desired Capacity"
                 },
                 "WorkloadNodesMaxSize": {
-                    "default": "Workload Nodes Max Size"
+                    "default": "Nodes Max Size"
                 },
                 "WorkloadNodesMinSize": {
-                    "default": "Workload Nodes Min Size"
+                    "default": "Nodes Min Size"
                 },
                 "NewBucket" : {
                     "default" : "Create S3 Bucket for License and Customization?"
@@ -126,7 +126,7 @@
             "Type": "String"
         },
         "PrivateSubnet1ID": {
-            "Description": "ID of private subnet 1 in Availability Zone 1 for the Workload (e.g., subnet-a0246dcd)",
+            "Description": "ID of private subnet 1 in Availability Zone 1 for the TIBCO JasperReports Servers (e.g., subnet-a0246dcd)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
@@ -134,7 +134,7 @@
 
         },
         "PrivateSubnet2ID": {
-            "Description": "ID of private subnet 2 in Availability Zone 2 for the Workload (e.g., subnet-b1f432cd)",
+            "Description": "ID of private subnet 2 in Availability Zone 2 for the TIBCO JasperReports Servers (e.g., subnet-b1f432cd)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
@@ -167,12 +167,12 @@
             ],
             "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "Type of EC2 instance for the Workload instances",
+            "Description": "Type of EC2 instance for the TIBCO JasperReports instances",
             "Type": "String"
         },
         "WorkloadNodesDesiredCapacity": {
             "Default": "1",
-            "Description": "The desired capacity for the Workload nodes Auto Scaling group",
+            "Description": "The desired capacity for the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
@@ -340,7 +340,8 @@
             "Type" : "AWS::CloudFormation::WaitCondition",
             "Properties" : {
                 "Handle" : { "Ref" : "RDSInitJrsDBWaitHandle" },
-                "Timeout" : "1800"
+                "Timeout" : "1800",
+                "Count" : "1"
             }
         },
         "NotificationTopic": {
@@ -637,7 +638,7 @@
         "WorkloadSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
-                "GroupDescription": "Allow access to the Workload instances",
+                "GroupDescription": "Allow access to the TIBCO JasperReports Server instances",
                 "VpcId": {
                     "Ref": "VPCID"
                 },
@@ -938,7 +939,7 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "Workload Server cluster node",
+                        "Value": "TIBCO JasperReports cluster node",
                         "PropagateAtLaunch": "true"
                     }
                 ]
@@ -968,7 +969,7 @@
     },
     "Outputs": {
         "GettingStartedPublicURL": {
-            "Description": "Workload Getting Started URL",
+            "Description": "TIBCO JasperReports Getting Started URL",
             "Value": {
                 "Fn::Join" : ["", ["http://",
                     { "Fn::GetAtt": [

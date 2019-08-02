@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This master template creates a VPC infrastructure for a multi-AZ, multi-tier deployment of a workload on AWS. It deploys a VPC with bastions and a workload cluster behind an ELB. The cluster is configured to use an S3 bucket for storage  **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
+    "Description": "This master template creates a VPC infrastructure for a deployment of a TIBCO JasperReports Server on AWS. It deploys a VPC with bastions and a instance in Public subnet. The instance is configured to use an S3 bucket for storage  **WARNING** This template creates EC2 instance and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
@@ -32,7 +32,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Node Configuration"
+                        "default": "TIBCO JasperReports Server Node Configuration"
                     },
                     "Parameters": [
                         "WorkloadInstanceType"
@@ -40,7 +40,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Storage Configuration"
+                        "default": "Storage Configuration"
                     },
                     "Parameters": [
                         "NewBucket",
@@ -96,7 +96,7 @@
                     "default": "VPC CIDR"
                 },
                 "WorkloadInstanceType": {
-                    "default": "Workload Servers Instance Type"
+                    "default": "Server Instance Type"
                 },
                 "NewBucket" : {
                     "default" : "Create S3 Bucket for License and Customization?"
@@ -213,7 +213,7 @@
             ],
             "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "EC2 instance type for the Workload instances",
+            "Description": "EC2 instance type for the TIBCO JasperReports Server instance",
             "Type": "String"
         },
         "NewBucket": {
@@ -365,7 +365,7 @@
     },
     "Outputs": {
       "GettingStartedPublicURL": {
-        "Description": "Jasperserver Getting started URL",
+        "Description": "TIBCO JasperReports Server Getting started URL",
         "Value": {
           "Fn::GetAtt": [
             "WorkloadStack",

@@ -25,7 +25,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Workload Storage Configuration"
+                        "default": "Storage Configuration"
                     },
                     "Parameters": [
                         "NewBucket",
@@ -47,7 +47,7 @@
                     "default": "VPC ID"
                 },
                 "WorkloadInstanceType": {
-                    "default": "Workload Servers Instance Type"
+                    "default": "TIBCO JasperReports Server Instance Type"
                 },
                 "NewBucket" : {
                     "default" : "Create S3 Bucket for License and Customization?"
@@ -93,7 +93,7 @@
             ],
             "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "Type of EC2 instance for the Workload instances",
+            "Description": "Type of EC2 instance for the TIBCO JasperReports Server instance",
             "Type": "String"
         },
         "NewBucket": {
@@ -189,6 +189,18 @@
         }
     },
     "Resources": {
+        "JRSInitWaitHandle" : {
+            "Type" : "AWS::CloudFormation::WaitConditionHandle",
+            "Properties" : {
+            }
+        },
+        "JRSInitWaitCondition" : {
+            "Type" : "AWS::CloudFormation::WaitCondition",
+            "Properties" : {
+                "Handle" : { "Ref" : "JRSInitWaitHandle" },
+                "Timeout" : "600"
+            }
+        },
         "SetupRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
@@ -400,13 +412,20 @@
                     "         --resource WorkloadInstance",
                     "         --configsets ConfigureAndRestart",
                     "         --region ", { "Ref" : "AWS::Region" }, "\n"
+
+                    "# Signal the status from cfn-init\n",
+                    "/opt/aws/bin/cfn-signal -e $? ",
+                    "         --data \"Application has completed DB configuration.\"",
+                    " ",{ "Fn::Base64" : { "Ref" : "JRSInitWaitCondition"}},"\n",
+                    ""
+
                 ]]}}
             }
         },
         "WorkloadSecurityGroup": {
             "Type": "AWS::EC2::SecurityGroup",
             "Properties": {
-                "GroupDescription": "Allow access to the Workload instances",
+                "GroupDescription": "Allow access to the TIBCO JasperReports Server instance",
                 "VpcId": {
                     "Ref": "VPCID"
                 },
@@ -448,7 +467,7 @@
     },
     "Outputs": {
         "GettingStartedPublicURL": {
-            "Description": "Workload Getting Started URL",
+            "Description": "TIBCO JasperReports Server Getting Started URL",
             "Value": {
                 "Fn::Join" : ["", ["http://",
                     { "Fn::GetAtt": [

@@ -74,7 +74,7 @@
         "RDSSubnetGroup" : {
         "Type" : "AWS::RDS::DBSubnetGroup",
             "Properties" : {
-                "DBSubnetGroupDescription" : "Jasperserver DB-Subnet Group",
+                "DBSubnetGroupDescription" : "TIBCO JasperReports DB-Subnet Group",
                 "SubnetIds" : [ { "Ref": "PrivateSubnet1ID" },{ "Ref": "PrivateSubnet2ID" } ]
             }
         },
