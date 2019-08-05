@@ -185,7 +185,7 @@
             "ap-south-1"     : { "64" : "ami-070853444eb33dfad"},
             "ap-northeast-1" : { "64" : "ami-09c6232c77ff6a3c1"},
             "ap-northeast-2" : { "64" : "ami-08f57e4cbd7a22449"},
-            "sa-east-1"      : { "64" : "ami-0e692e1877231ab2e"},
+            "sa-east-1"      : { "64" : "ami-0e692e1877231ab2e"}
         }
     },
     "Resources": {
@@ -411,7 +411,7 @@
                     "         --stack ", { "Ref" : "AWS::StackName" },
                     "         --resource WorkloadInstance",
                     "         --configsets ConfigureAndRestart",
-                    "         --region ", { "Ref" : "AWS::Region" }, "\n"
+                    "         --region ", { "Ref" : "AWS::Region" }, "\n",
 
                     "# Signal the status from cfn-init\n",
                     "/opt/aws/bin/cfn-signal -e $? ",
