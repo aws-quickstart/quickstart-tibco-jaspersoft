@@ -325,7 +325,7 @@
                 "No"
             ],
             "ConstraintDescription": "The value should be Yes/No.",
-            "Default": "Yes",
+            "Default": "No",
             "Description": "Include samples in repository or not",
             "Type": "String"
         }
