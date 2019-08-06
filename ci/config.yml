@@ -1,27 +1,64 @@
+---
 global:
-  marketplace-ami: false
-  owner: quickstart-eng@amazon.com
-  qsname: quickstart-tibco-jaspersoft
+  owner: astoykov@tibco.com
+  qsname: sample-taskcat-project
+  s3bucket: qaqs-test2
   regions:
-    - ap-northeast-1
-    - ap-northeast-2
-    - ap-south-1
-    - ap-southeast-1
-    - ap-southeast-2
-    - ca-central-1
-    - eu-central-1
-    - eu-west-1
-    - sa-east-1
     - us-east-1
     - us-east-2
     - us-west-1
     - us-west-2
+    - ca-central-1
+    - ap-south-1
+    - ap-northeast-1
+    - ap-northeast-2
+    - ap-southeast-1
+    - ap-southeast-2
+    - eu-west-1
+    - eu-west-2
+    - eu-west-3
+    - eu-central-1
+##    - eu-north-1  - Stockholm fails JRS-21450
+    - sa-east-1
   reporting: true
- 
 tests:
-  quickstart-tibco-jaspersoftt1:
-    parameter_input: quickstart-tibco-jaspersoft-example-params1.json
-    template_file: quickstart-tibco-jaspersoft-example1.template
-  quickstart-tibco-jaspersoftt2:
-    parameter_input: quickstart-tibco-jaspersoft-example-params2.json
-    template_file: quickstart-tibco-jaspersoft-example2.template
+#  taskcat-json:
+#    parameter_input: qs-si-new-vpc-existing-bucket.json
+#    regions:
+#    - us-east-1
+#    - us-east-2
+#    - us-west-1
+#    - us-west-2
+#    - ca-central-1
+#    - ap-south-1
+#    - ap-northeast-1
+#    - ap-northeast-2
+#    - ap-southeast-1
+#    - ap-southeast-2
+#    - eu-west-1
+#    - eu-west-2
+#    - eu-west-3
+#    - eu-central-1
+##    - eu-north-1  - Stockholm fails JRS-21450
+#    - sa-east-1
+#    template_file: tibco-jrs-single-instance-new-infrastructure.template
+  taskcat-json2:
+    parameter_input: qs-cluster-new-vpc-existing-bucket.json
+    regions:
+#    - us-east-1
+    - us-east-2
+    - us-west-1
+    - us-west-2
+    - ca-central-1
+    - ap-south-1
+    - ap-northeast-1
+    - ap-northeast-2
+    - ap-southeast-1
+    - ap-southeast-2
+    - eu-west-1
+    - eu-west-2
+    - eu-west-3
+    - eu-central-1
+##    - eu-north-1  - Stockholm fails JRS-21450
+    - sa-east-1
+    template_file: tibco-jrs-cluster-new-infrastructure.template
