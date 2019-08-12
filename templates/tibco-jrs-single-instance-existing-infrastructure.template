@@ -416,7 +416,7 @@
                     "# Signal the status from cfn-init\n",
                     "/opt/aws/bin/cfn-signal -e $? ",
                     "         --data \"Application has completed DB configuration.\"",
-                    " ",{ "Fn::Base64" : { "Ref" : "JRSInitWaitCondition"}},"\n",
+                    " ",{ "Fn::Base64" : { "Ref" : "JRSInitWaitHandle"}},"\n",
                     ""
 
                 ]]}}
