@@ -57,6 +57,6 @@
     },
     {
         "ParameterKey": "S3BucketName",
-        "ParameterValue": "$[taskcat_autobucket]"
+        "ParameterValue": "$[taskcat_random-string]"
     }
 ]
