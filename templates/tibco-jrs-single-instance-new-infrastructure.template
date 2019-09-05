@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This master template creates a VPC infrastructure for a deployment of TIBCO JasperReports Server on AWS. It deploys a VPC with instance in Public subnet. The instance is configured to use an S3 bucket for storage  **WARNING** This template creates EC2 instance and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
+    "Description": "This master template creates a VPC infrastructure for a deployment of TIBCO JasperReports Server on AWS. It deploys a VPC with instance in Public subnet. The instance is configured to use an S3 bucket for storage  **WARNING** This template creates EC2 instance and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1puat844g)",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [

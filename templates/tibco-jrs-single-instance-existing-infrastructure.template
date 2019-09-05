@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This template deploys TIBCO JasperReports Server into Public subnet. The instance is configured to use an S3 bucket for storage **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
+    "Description": "This template deploys TIBCO JasperReports Server into Public subnet. The instance is configured to use an S3 bucket for storage **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1puat8478)",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
