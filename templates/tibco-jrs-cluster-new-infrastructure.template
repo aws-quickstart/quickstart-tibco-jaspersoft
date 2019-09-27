@@ -26,8 +26,7 @@
                     "Parameters": [
                         "KeyPairName",
                         "BastionAMIOS",
-                        "BastionInstanceType",
-                        "WorkloadInstanceType"
+                        "BastionInstanceType"
                     ]
                 },
                 {
@@ -35,6 +34,7 @@
                         "default": "TIBCO JasperReports Nodes Configuration"
                     },
                     "Parameters": [
+                        "WorkloadInstanceType",
                         "WorkloadNodesMinSize",
                         "WorkloadNodesDesiredCapacity",
                         "WorkloadNodesMaxSize",
@@ -100,6 +100,18 @@
                 },
                 "QSS3KeyPrefix": {
                     "default": "Quick Start S3 Key Prefix"
+                },
+                "RDSDbSize": {
+                    "default": "RDS Database Instance Type"
+                },
+                "RDSUser": {
+                    "default": "RDS Database Username"
+                },
+                "RDSPassword": {
+                    "default": "RDS Database Password"
+                },
+                "DBName": {
+                    "default": "RDS Database Name"
                 },
                 "RemoteAccessCIDR": {
                     "default": "Allowed Bastion External Access CIDR"
@@ -274,12 +286,12 @@
         },
         "WorkloadNodesDesiredCapacity": {
             "Default": "2",
-            "Description": "The desired capacity for the Auto Scaling group",
+            "Description": "The desired no. of nodes in the Auto Scaling group",
             "Type": "String"
         },
         "WorkloadNodesMaxSize": {
             "Default": "4",
-            "Description": "The maximum size of the Auto Scaling group",
+            "Description": "The maximum no. of nodes in the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
@@ -287,7 +299,7 @@
         },
         "WorkloadNodesMinSize": {
             "Default": "2",
-            "Description": "The minimum size of the Auto Scaling group",
+            "Description": "The minimum on. of nodes in the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",

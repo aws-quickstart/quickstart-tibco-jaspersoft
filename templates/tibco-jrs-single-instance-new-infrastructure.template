@@ -35,14 +35,7 @@
                         "default": "TIBCO JasperReports Server Node Configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType"
-                    ]
-                },
-                {
-                    "Label": {
-                        "default": "Storage Configuration"
-                    },
-                    "Parameters": [
+                        "WorkloadInstanceType",
                         "NewBucket",
                         "S3BucketName"
                     ]
@@ -123,7 +116,7 @@
                 "Ubuntu-Server-16.04-LTS-HVM"
             ],
             "Default": "Amazon-Linux-HVM",
-            "Description": "The Linux distribution for the AMI to be used for the bastion instances",
+            "Description": "The Linux distribution for the AMI to be used for the bastion instance",
             "Type": "String"
         },
         "BastionInstanceType": {
@@ -142,7 +135,7 @@
                 "m4.4xlarge"
             ],
             "Default": "t2.micro",
-            "Description": "Amazon EC2 instance type for the bastion instances",
+            "Description": "Amazon EC2 instance type for the bastion instance",
             "Type": "String"
         },
         "KeyPairName": {

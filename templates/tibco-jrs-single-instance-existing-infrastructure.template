@@ -20,14 +20,7 @@
                     "Parameters": [
                         "KeyPairName",
                         "BastionSecurityGroupID",
-                        "WorkloadInstanceType"
-                    ]
-                },
-                {
-                    "Label": {
-                        "default": "Storage Configuration"
-                    },
-                    "Parameters": [
+                        "WorkloadInstanceType",
                         "NewBucket",
                         "S3BucketName"
                     ]

@@ -22,8 +22,7 @@
                     },
                     "Parameters": [
                         "KeyPairName",
-                        "BastionSecurityGroupID",
-                        "WorkloadInstanceType"
+                        "BastionSecurityGroupID"
                     ]
                 },
                 {
@@ -31,6 +30,7 @@
                         "default": "TIBCO JasperReports Nodes Configuration"
                     },
                     "Parameters": [
+                        "WorkloadInstanceType",
                         "WorkloadNodesMinSize",
                         "WorkloadNodesMaxSize",
                         "WorkloadNodesDesiredCapacity",
@@ -74,6 +74,15 @@
                 },
                 "PublicSubnet2ID": {
                     "default": "Public Subnet 2 ID"
+                },
+                "RDSUser": {
+                    "default": "RDS Database Username"
+                },
+                "RDSPassword": {
+                    "default": "RDS Database Password"
+                },
+                "DBName": {
+                    "default": "RDS Database Name"
                 },
                 "VPCID": {
                     "default": "VPC ID"
@@ -171,24 +180,24 @@
             "Type": "String"
         },
         "WorkloadNodesDesiredCapacity": {
-            "Default": "1",
-            "Description": "The desired capacity for the Auto Scaling group",
+            "Default": "2",
+            "Description": "The desired no. of nodes in the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "WorkloadNodesMaxSize": {
-            "Default": "2",
-            "Description": "The maximum size of the Auto Scaling group",
+            "Default": "4",
+            "Description": "The maximum no. of nodes in the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "WorkloadNodesMinSize": {
-            "Default": "1",
-            "Description": "The minimum size of the Auto Scaling group",
+            "Default": "2",
+            "Description": "The minimum no. of nodes in the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
