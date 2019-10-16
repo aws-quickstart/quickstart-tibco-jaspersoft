@@ -16,7 +16,7 @@ You can use the AWS CloudFormation templates included with the Quick Start to de
 
 ![Quick Start architecture for TIBCO JasperReports Server on the AWS Cloud](https://d0.awsstatic.com/partner-network/QuickStart/datasheets/tibco-jasperreports-server-on-aws-architecture-diagram.png)
 
-For architectural details, best practices, and step-by-step instructions, see the deployment guide for [TIBCO JasperReports Server](https://fwd.aws/m38X5).
+For architectural details, best practices, and step-by-step instructions, see the [deployment guide](https://fwd.aws/m38X5) for TIBCO JasperReports Server on AWS.
 
 To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo.
 If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/).
