@@ -20,6 +20,7 @@
                     "Parameters": [
                         "KeyPairName",
                         "BastionSecurityGroupID"
+                    ]
                 },
                 {
                     "Label": {
