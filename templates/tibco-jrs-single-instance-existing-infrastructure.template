@@ -19,7 +19,7 @@
                     },
                     "Parameters": [
                         "KeyPairName",
-                        "BastionSecurityGroupID",
+                        "BastionSecurityGroupID"
                 },
                 {
                     "Label": {
