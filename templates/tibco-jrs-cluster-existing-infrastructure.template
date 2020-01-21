@@ -1,12 +1,12 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This workload template deploys an Auto Scaling group behind an Application Load Balancer in two private subnets. The cluster is configured to use an S3 bucket for storage **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1puat849f)",
+    "Description": "This workload template deploys an ASG behind an ELB load balancer in two private subnets. The cluster is configured to use an S3 bucket for storage **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
                 {
                     "Label": {
-                        "default": "Network configuration"
+                        "default": "Network Configuration"
                     },
                     "Parameters": [
                         "VPCID",
@@ -18,19 +18,19 @@
                 },
                 {
                     "Label": {
-                        "default": "Amazon EC2 configuration"
+                        "default": "Amazon EC2 Configuration"
                     },
                     "Parameters": [
                         "KeyPairName",
-                        "BastionSecurityGroupID"
+                        "BastionSecurityGroupID",
+                        "WorkloadInstanceType"
                     ]
                 },
                 {
                     "Label": {
-                        "default": "TIBCO JasperReports nodes configuration"
+                        "default": "TIBCO JasperReports Nodes Configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType",
                         "WorkloadNodesMinSize",
                         "WorkloadNodesMaxSize",
                         "WorkloadNodesDesiredCapacity",
@@ -41,7 +41,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Database configuration"
+                        "default": "Database Configuration"
                     },
                     "Parameters": [
                         "RDSAddress",
@@ -55,61 +55,46 @@
             ],
             "ParameterLabels": {
                 "BastionSecurityGroupID": {
-                    "default": "Bastion security group ID"
+                    "default": "Bastion Security Group ID"
                 },
                 "KeyPairName": {
-                    "default": "Key pair name"
+                    "default": "Key Pair Name"
                 },
                 "OperatorEmail": {
-                    "default": "Operator email address"
+                    "default": "Operator Email"
                 },
                 "PrivateSubnet1ID": {
-                    "default": "Private subnet 1 ID"
+                    "default": "Private Subnet 1 ID"
                 },
                 "PrivateSubnet2ID": {
-                    "default": "Private subnet 2 ID"
+                    "default": "Private Subnet 2 ID"
                 },
                 "PublicSubnet1ID": {
-                    "default": "Public subnet 1 ID"
+                    "default": "Public Subnet 1 ID"
                 },
                 "PublicSubnet2ID": {
-                    "default": "Public subnet 2 ID"
-                },
-                "RDAddress": {
-                    "default": "RDS database address"
-                },
-                "RDSPort": {
-                    "default": "RDS database port"
-                },
-                "RDSUser": {
-                    "default": "RDS database user name"
-                },
-                "RDSPassword": {
-                    "default": "RDS database password"
-                },
-                "DBName": {
-                    "default": "RDS database name"
+                    "default": "Public Subnet 2 ID"
                 },
                 "VPCID": {
                     "default": "VPC ID"
                 },
                 "WorkloadInstanceType": {
-                    "default": "Servers instance type"
+                    "default": "Servers Instance Type"
                 },
                 "WorkloadNodesDesiredCapacity": {
-                    "default": "Nodes desired capacity"
+                    "default": "Nodes Desired Capacity"
                 },
                 "WorkloadNodesMaxSize": {
-                    "default": "Nodes maximum size"
+                    "default": "Nodes Max Size"
                 },
                 "WorkloadNodesMinSize": {
-                    "default": "Nodes minimum size"
+                    "default": "Nodes Min Size"
                 },
                 "NewBucket" : {
-                    "default" : "S3 bucket for license and customization?"
+                    "default" : "Create S3 Bucket for License and Customization?"
                 },
                 "S3BucketName": {
-                    "default" : "Name of S3 bucket for license and customization"
+                    "default" : "S3 Bucket for License and Customization"
                 },
                 "IncludeSamples": {
                     "default" : "Include samples"
@@ -119,7 +104,7 @@
     },
     "Parameters": {
         "BastionSecurityGroupID": {
-            "Description": "ID of the bastion host security group to enable SSH connections (e.g., sg-7f16e910).",
+            "Description": "ID of the bastion host security group to enable SSH connections (e.g., sg-7f16e910)",
             "Type": "AWS::EC2::SecurityGroup::Id",
             "MinLength": "1",
             "MaxLength": "64",
@@ -127,7 +112,7 @@
 
         },
         "KeyPairName": {
-            "Description": "Name of an existing EC2 key pair, which allows you to securely connect to your instance after it launches.",
+            "Description": "Name of an existing EC2 key pair. All instances will launch with this key pair.",
             "Type": "AWS::EC2::KeyPair::KeyName",
             "MinLength": "1",
             "MaxLength": "64",
@@ -137,11 +122,11 @@
         "OperatorEmail": {
             "AllowedPattern": "(([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?))||(^$)",
             "ConstraintDescription": "Must be a valid email address.",
-            "Description": "(Optional) Email address that notifications of any scaling operations will be sent to.",
+            "Description": "Email address that notifications of any scaling operations will be sent to (Optional)",
             "Type": "String"
         },
         "PrivateSubnet1ID": {
-            "Description": "ID of private subnet 1 in Availability Zone 1 for the TIBCO JasperReports Servers (e.g., subnet-a0246dcd).",
+            "Description": "ID of private subnet 1 in Availability Zone 1 for the TIBCO JasperReports Servers (e.g., subnet-a0246dcd)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
@@ -149,28 +134,28 @@
 
         },
         "PrivateSubnet2ID": {
-            "Description": "ID of private subnet 2 in Availability Zone 2 for the TIBCO JasperReports Servers (e.g., subnet-b1f432cd).",
+            "Description": "ID of private subnet 2 in Availability Zone 2 for the TIBCO JasperReports Servers (e.g., subnet-b1f432cd)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "PublicSubnet1ID": {
-            "Description": "ID of public subnet 1 in Availability Zone 1 for the Application Load Balancer (e.g., subnet-9bc642ac).",
+            "Description": "ID of public subnet 1 in Availability Zone 1 for the ELB load balancer (e.g., subnet-9bc642ac)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "PublicSubnet2ID": {
-            "Description": "ID of public subnet 2 in Availability Zone 2 for the Application Load Balancer (e.g., subnet-e3246d8e).",
+            "Description": "ID of public subnet 2 in Availability Zone 2 for the ELB load balancer (e.g., subnet-e3246d8e)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "VPCID": {
-            "Description": "ID of your existing VPC for deployment.",
+            "Description": "ID of your existing VPC for deployment",
             "Type": "AWS::EC2::VPC::Id",
             "MinLength": "1",
             "MaxLength": "64",
@@ -182,35 +167,35 @@
             ],
             "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "Amazon EC2 instance type for the TIBCO JasperReports Server instances.",
+            "Description": "Type of EC2 instance for the TIBCO JasperReports instances",
             "Type": "String"
         },
         "WorkloadNodesDesiredCapacity": {
-            "Default": "2",
-            "Description": "The desired number of nodes in the Auto Scaling group.",
+            "Default": "1",
+            "Description": "The desired number of nodes for the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "WorkloadNodesMaxSize": {
-            "Default": "4",
-            "Description": "The maximum number of nodes in the Auto Scaling group.",
+            "Default": "2",
+            "Description": "The maximum number of nodes of the Auto Scaling group",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "WorkloadNodesMinSize": {
-            "Default": "2",
-            "Description": "The minimum number of nodes in the Auto Scaling group.",
+            "Default": "1",
+            "Description": "The minimum number of nodes of the Auto Scaling group.",
             "Type": "String",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Value is Required"
         },
         "RDSUser" : {
-            "Description" : "Master user name for the RDS database.",
+            "Description" : "Master User Name for RDS database",
             "Type" : "String",
             "MinLength": "1",
             "MaxLength": "64",
@@ -218,7 +203,7 @@
             "ConstraintDescription" : "It can contain only alphanumeric characters and underscores."
         },
         "RDSPassword" : {
-            "Description" : "Master password for the RDS database.",
+            "Description" : "Master password for RDS database",
             "Type" : "String",
             "MinLength": "1",
             "MaxLength": "64",
@@ -227,11 +212,11 @@
             "ConstraintDescription" : "It can contain only alphanumeric characters and underscores."
         },
         "RDSAddress" : {
-            "Description" : "Address of the Amazon RDS database.",
+            "Description" : "RDS Address",
             "Type" : "String",
             "MinLength": "1",
-            "MaxLength": "64",
-            "ConstraintDescription" : "It can contain only alphanumeric characters and underscores."
+            "MaxLength": "128",
+            "ConstraintDescription" : "Endpoint should be maximum 128 characters long."
         },
         "RDSPort" : {
             "Description" : "RDS Port",
@@ -240,7 +225,7 @@
             "ConstraintDescription" : "Port number should be higher than 1024"
         },
         "DBName" : {
-            "Description" : "Name of the new database that will be used for repository creation. Enter a unique database name.",
+            "Description" : "New Database name which will be used for repository creation. Enter a unique database name.",
             "Type" : "String",
             "MinLength": "1",
             "MaxLength": "64",
@@ -255,7 +240,7 @@
             ],
             "ConstraintDescription": "The value should be Yes/No.",
             "Default": "No",
-            "Description": "Sample data for the repository. Choose No if the foodmart or sugarcrm databases already exist.",
+            "Description": "Do you want to include samples in the repository? Select No if the foodmart or sugarcrm databases already exist.",
             "Type": "String"
         },
         "NewBucket": {
@@ -265,11 +250,11 @@
             ],
             "ConstraintDescription": "The value should be Yes/No.",
             "Default": "No",
-            "Description": "A new S3 bucket. Choose Yes to create a new bucket, where you can upload third-party drivers, OSGI bundles, certificates, plugins, etc., to extend the base image later.",
+            "Description": "S3 customization bucket. Select YES to create a new bucket. Select NO to use your own bucket. You can upload third-party drivers, bundles, certificates, configuration files etc. to extend the base image later.",
             "Type": "String"
         },
         "S3BucketName": {
-            "Description" : "Name of the S3 new bucket. Enter a unique name that does not include uppercase characters.",
+            "Description" : "Name of the customization bucket. The new S3 bucket name or your existing bucket name. Enter a unique name that does not include uppercase characters. An instance reboot is required to pick up the uploaded files in case of new S3 bucket.",
             "Type" : "String",
             "Default" : "new-bucket-for-license-and-customization",
             "MinLength": "1",
@@ -611,7 +596,7 @@
                         "commands" : {
                             "initRdsDB" : {
                                 "cwd" : "/usr/share/jrs_dist/jasperreports-server-bin/",
-                                "command" : { "Fn::Join" : [" ", ["./deploy-database-to-external-repo.sh",{"Fn::If": ["IncludeSamplesCondition","normal","minimal"]}]]},
+                                "command" : { "Fn::Join" : [" ", ["ksp=/etc/jasperserver ./deploy-database-to-external-repo.sh",{"Fn::If": ["IncludeSamplesCondition","normal","minimal"]}]]},
                                 "failOnError" : "true"
                             }
                         }

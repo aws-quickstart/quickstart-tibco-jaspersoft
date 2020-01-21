@@ -1,12 +1,12 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This template deploys TIBCO JasperReports Server into Public subnet. The instance is configured to use an S3 bucket for storage **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template. (qs-1puat8478)",
+    "Description": "This template deploys TIBCO JasperReports Server into Public subnet. The instance is configured to use an S3 bucket for storage **WARNING** This template creates EC2 instances and related resources. You will be billed for the AWS resources used if you create a stack from this template.",
     "Metadata": {
         "AWS::CloudFormation::Interface": {
             "ParameterGroups": [
                 {
                     "Label": {
-                        "default": "Network configuration"
+                        "default": "Network Configuration"
                     },
                     "Parameters": [
                         "VPCID",
@@ -15,19 +15,19 @@
                 },
                 {
                     "Label": {
-                        "default": "Amazon EC2 configuration"
+                        "default": "Amazon EC2 Configuration"
                     },
                     "Parameters": [
                         "KeyPairName",
-                        "BastionSecurityGroupID"
+                        "BastionSecurityGroupID",
+                        "WorkloadInstanceType"
                     ]
                 },
                 {
                     "Label": {
-                        "default": "TIBCO JasperReports Server node configuration"
+                        "default": "Storage Configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType",
                         "NewBucket",
                         "S3BucketName"
                     ]
@@ -35,53 +35,53 @@
             ],
             "ParameterLabels": {
                 "BastionSecurityGroupID": {
-                    "default": "Bastion security group ID"
+                    "default": "Bastion Security Group ID"
                 },
                 "KeyPairName": {
-                    "default": "Key pair name"
+                    "default": "Key Pair Name"
                 },
                 "PublicSubnet1ID": {
-                    "default": "Public subnet 1 ID"
+                    "default": "Public Subnet 1 ID"
                 },
                 "VPCID": {
                     "default": "VPC ID"
                 },
                 "WorkloadInstanceType": {
-                    "default": "Server instance Type"
+                    "default": "TIBCO JasperReports Server Instance Type"
                 },
                 "NewBucket" : {
-                    "default" : "S3 bucket for license and customization?"
+                    "default" : "Create S3 Bucket for License and Customization?"
                 },
                 "S3BucketName": {
-                    "default" : "Name of S3 bucket for license and customization"
+                    "default" : "S3 Bucket for License and Customization"
                 }
             }
         }
     },
     "Parameters": {
         "BastionSecurityGroupID": {
-            "Description": "ID of the bastion host security group to enable SSH connections (e.g., sg-7f16e910).",
+            "Description": "ID of the bastion host security group to enable SSH connections (e.g., sg-7f16e910)",
             "Type": "AWS::EC2::SecurityGroup::Id",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "KeyPairName": {
-            "Description": "Name of an existing EC2 key pair, which allows you to securely connect to your instance after it launches.",
+            "Description": "Name of an existing EC2 key pair. All instances will launch with this key pair.",
             "Type": "AWS::EC2::KeyPair::KeyName",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "PublicSubnet1ID": {
-            "Description": "ID of public subnet 1 in Availability Zone 1 for the Application Load Balancer (e.g., subnet-9bc642ac).",
+            "Description": "ID of public subnet 1 in Availability Zone 1 for the ELB load balancer (e.g., subnet-9bc642ac)",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
             "ConstraintDescription" : "Parameter value is Required"
         },
         "VPCID": {
-            "Description": "ID of your existing VPC for deployment.",
+            "Description": "ID of your existing VPC for deployment",
             "Type": "AWS::EC2::VPC::Id",
             "MinLength": "1",
             "MaxLength": "64",
@@ -93,7 +93,7 @@
             ],
             "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "Amazon EC2 instance type for the TIBCO JasperReports instance.",
+            "Description": "Type of EC2 instance for the TIBCO JasperReports Server instance",
             "Type": "String"
         },
         "NewBucket": {
@@ -103,11 +103,11 @@
             ],
             "ConstraintDescription": "The value should be Yes/No.",
             "Default": "No",
-            "Description": "A new S3 bucket. Choose Yes to create a new bucket, where you can upload third-party drivers, OSGI bundles, certificates, plugins, etc., to extend the base image later.",
+            "Description": "S3 customization bucket. Select YES to create a new bucket. Select NO to use your own bucket. You can upload third-party drivers, bundles, certificates, configuration files etc. to extend the base image later.",
             "Type": "String"
         },
         "S3BucketName": {
-            "Description" : "Name of the new S3 bucket. Enter a unique name that does not include uppercase characters.",
+            "Description" : "Name of the customization bucket. The new S3 bucket name or your existing bucket name. Enter a unique name that does not include uppercase characters. An instance reboot is required to pick up the uploaded files in case of new S3 bucket.",
             "Type" : "String",
             "Default" : "new-bucket-for-license-and-customization",
             "MinLength": "1",
@@ -336,7 +336,7 @@
 
                   "commands" : {
                     "1-setInitialPassword" : {
-                      "command" : { "Fn::Join" :[" ",["/usr/bin/java -cp /etc/jasperserver/*:/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/lib/*:/usr/share/tomcat8/lib/*","com.jaspersoft.utils.DirectPasswordChanger jdbc:postgresql://127.0.0.1:5432/jasperserver","postgres","postgres","superuser","`/opt/aws/bin/ec2-metadata --instance-id | cut -d \" \" -f 2`"]]},
+                      "command" : { "Fn::Join" :[" ",["ksp=/etc/jasperserver /usr/bin/java -cp /etc/jasperserver/*:/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/lib/*:/usr/share/tomcat8/lib/*","com.jaspersoft.utils.DirectPasswordChanger jdbc:postgresql://127.0.0.1:5432/jasperserver","postgres","postgres","superuser","`/opt/aws/bin/ec2-metadata --instance-id | cut -d \" \" -f 2`"]]},
                       "ignoreErrors" : "false",
                       "test" : "test ! -e /etc/jasperserver/initializationMarker.log"
                     },
