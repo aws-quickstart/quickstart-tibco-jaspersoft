@@ -32,10 +32,17 @@
                 },
                 {
                     "Label": {
-                        "default": "TIBCO JasperReports Server node configuration"
+                        "default": "TIBCO JasperReports Server Node Configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType",
+                        "WorkloadInstanceType"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "Storage Configuration"
+                    },
+                    "Parameters": [
                         "NewBucket",
                         "S3BucketName"
                     ]

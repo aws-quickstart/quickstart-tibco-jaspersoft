@@ -26,7 +26,8 @@
                     "Parameters": [
                         "KeyPairName",
                         "BastionAMIOS",
-                        "BastionInstanceType"
+                        "BastionInstanceType",
+                        "WorkloadInstanceType"
                     ]
                 },
                 {
@@ -34,7 +35,6 @@
                         "default": "TIBCO JasperReports nodes configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType",
                         "WorkloadNodesMinSize",
                         "WorkloadNodesDesiredCapacity",
                         "WorkloadNodesMaxSize",

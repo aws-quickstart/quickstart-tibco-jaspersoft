@@ -19,7 +19,8 @@
                     },
                     "Parameters": [
                         "KeyPairName",
-                        "BastionSecurityGroupID"
+                        "BastionSecurityGroupID",
+                        "WorkloadInstanceType"
                     ]
                 },
                 {
@@ -27,7 +28,6 @@
                         "default": "TIBCO JasperReports Server node configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType",
                         "NewBucket",
                         "S3BucketName"
                     ]
@@ -336,7 +336,7 @@
 
                   "commands" : {
                     "1-setInitialPassword" : {
-                      "command" : { "Fn::Join" :[" ",["/usr/bin/java -cp /etc/jasperserver/*:/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/lib/*:/usr/share/tomcat8/lib/*","com.jaspersoft.utils.DirectPasswordChanger jdbc:postgresql://127.0.0.1:5432/jasperserver","postgres","postgres","superuser","`/opt/aws/bin/ec2-metadata --instance-id | cut -d \" \" -f 2`"]]},
+                      "command" : { "Fn::Join" :[" ",["ksp=/etc/jasperserver /usr/bin/java -cp /etc/jasperserver/*:/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/lib/*:/usr/share/tomcat8/lib/*","com.jaspersoft.utils.DirectPasswordChanger jdbc:postgresql://127.0.0.1:5432/jasperserver","postgres","postgres","superuser","`/opt/aws/bin/ec2-metadata --instance-id | cut -d \" \" -f 2`"]]},
                       "ignoreErrors" : "false",
                       "test" : "test ! -e /etc/jasperserver/initializationMarker.log"
                     },

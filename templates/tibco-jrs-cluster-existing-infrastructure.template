@@ -22,7 +22,8 @@
                     },
                     "Parameters": [
                         "KeyPairName",
-                        "BastionSecurityGroupID"
+                        "BastionSecurityGroupID",
+                        "WorkloadInstanceType"
                     ]
                 },
                 {
@@ -30,7 +31,6 @@
                         "default": "TIBCO JasperReports nodes configuration"
                     },
                     "Parameters": [
-                        "WorkloadInstanceType",
                         "WorkloadNodesMinSize",
                         "WorkloadNodesMaxSize",
                         "WorkloadNodesDesiredCapacity",
@@ -230,8 +230,8 @@
             "Description" : "Address of the Amazon RDS database.",
             "Type" : "String",
             "MinLength": "1",
-            "MaxLength": "64",
-            "ConstraintDescription" : "It can contain only alphanumeric characters and underscores."
+            "MaxLength": "128",
+            "ConstraintDescription" : "Endpoint should be maximum 128 characters long."
         },
         "RDSPort" : {
             "Description" : "RDS Port",
@@ -611,7 +611,7 @@
                         "commands" : {
                             "initRdsDB" : {
                                 "cwd" : "/usr/share/jrs_dist/jasperreports-server-bin/",
-                                "command" : { "Fn::Join" : [" ", ["./deploy-database-to-external-repo.sh",{"Fn::If": ["IncludeSamplesCondition","normal","minimal"]}]]},
+                                "command" : { "Fn::Join" : [" ", ["ksp=/etc/jasperserver ./deploy-database-to-external-repo.sh",{"Fn::If": ["IncludeSamplesCondition","normal","minimal"]}]]},
                                 "failOnError" : "true"
                             }
                         }
