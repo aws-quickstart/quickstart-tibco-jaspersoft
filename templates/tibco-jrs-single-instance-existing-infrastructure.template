@@ -170,22 +170,22 @@
     },
     "Mappings": {
         "AWSAMIRegionMap": {
-            "us-east-1" : { "64" : "ami-07e1fe71c982efbd0"},
-            "us-east-2" : { "64" : "ami-006a5b311cc3df7fe"},
-            "us-west-1" : { "64" : "ami-0b66f45597597fba2"},
-            "us-west-2" : { "64" : "ami-03d0ae7c0aa0b03e1"},
-            "ca-central-1" : { "64" : "ami-0db5966371975a1e4"},
-            "eu-central-1" : { "64" : "ami-00156f1e923486e87"},
-            "eu-west-1" : { "64" : "ami-03ab7e649660e479d"},
-            "eu-west-2" : { "64" : "ami-02091ebf63fa1a7f0"},
-            "eu-west-3" : { "64" : "ami-0744ce138a0dc9929"},
-            "eu-north-1" : { "64" : "ami-0ff2ac0a6651db2ee"},
-            "ap-southeast-1" : { "64" : "ami-0e970a5500a79bee8"},
-            "ap-southeast-2" : { "64" : "ami-09231f01688a835ec"},
-            "ap-south-1" : { "64" : "ami-05d7d181acc353182"},
-            "ap-northeast-1" : { "64" : "ami-00a2cd8ed572d2e35"},
-            "ap-northeast-2" : { "64" : "ami-0d3319aee4fd7f496"},
-            "sa-east-1" : { "64" : "ami-0f15bfe6af0995b01"}
+            "us-east-1" : { "64" : "ami-0cf9d58847935a7b0"},
+            "us-east-2" : { "64" : "ami-0322118f66ff04e22"},
+            "us-west-1" : { "64" : "ami-047906311ba310310"},
+            "us-west-2" : { "64" : "ami-083a0cbc5ec80247d"},
+            "ca-central-1" : { "64" : "ami-0940529e030cff4bb"},
+            "eu-central-1" : { "64" : "ami-0fc5631ac1eebb717"},
+            "eu-west-1" : { "64" : "ami-0f71d26edaf94e816"},
+            "eu-west-2" : { "64" : "ami-0eca2b77931ad3dfe"},
+            "eu-west-3" : { "64" : "ami-0c5a0d2263e5b6dc0"},
+            "eu-north-1" : { "64" : "ami-0c35c59eb1b61b047"},
+            "ap-southeast-1" : { "64" : "ami-0df10e53ecf9715b1"},
+            "ap-southeast-2" : { "64" : "ami-0d63bd883e07dcd1e"},
+            "ap-south-1" : { "64" : "ami-0a11732c71571cfe0"},
+            "ap-northeast-1" : { "64" : "ami-0e257bc476d3ab29f"},
+            "ap-northeast-2" : { "64" : "ami-028f940412b9012f2"},
+            "sa-east-1" : { "64" : "ami-04e13931d5525b127"}
         }
     },
     "Resources": {
