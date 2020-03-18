@@ -49,7 +49,7 @@
     },
     {
         "ParameterKey": "WorkloadInstanceType",
-        "ParameterValue": "t2.medium"
+        "ParameterValue": "m5.large"
     },
     {
         "ParameterKey": "NewBucket",
