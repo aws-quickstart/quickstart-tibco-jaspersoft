@@ -327,22 +327,22 @@
     },
     "Mappings": {
         "AWSAMIRegionMap": {
-            "us-east-1" : { "64" : "ami-0cf9d58847935a7b0"},
-            "us-east-2" : { "64" : "ami-0322118f66ff04e22"},
-            "us-west-1" : { "64" : "ami-047906311ba310310"},
-            "us-west-2" : { "64" : "ami-083a0cbc5ec80247d"},
-            "ca-central-1" : { "64" : "ami-0940529e030cff4bb"},
-            "eu-central-1" : { "64" : "ami-0fc5631ac1eebb717"},
-            "eu-west-1" : { "64" : "ami-0f71d26edaf94e816"},
-            "eu-west-2" : { "64" : "ami-0eca2b77931ad3dfe"},
-            "eu-west-3" : { "64" : "ami-0c5a0d2263e5b6dc0"},
-            "eu-north-1" : { "64" : "ami-0c35c59eb1b61b047"},
-            "ap-southeast-1" : { "64" : "ami-0df10e53ecf9715b1"},
-            "ap-southeast-2" : { "64" : "ami-0d63bd883e07dcd1e"},
-            "ap-south-1" : { "64" : "ami-0a11732c71571cfe0"},
-            "ap-northeast-1" : { "64" : "ami-0e257bc476d3ab29f"},
-            "ap-northeast-2" : { "64" : "ami-028f940412b9012f2"},
-            "sa-east-1" : { "64" : "ami-04e13931d5525b127"}
+            "us-east-1" : { "64" : "ami-02b8e855819a166d2"},
+            "us-east-2" : { "64" : "ami-002bdf8bb98a89eff"},
+            "us-west-1" : { "64" : "ami-0b66f45597597fba2"},
+            "us-west-2" : { "64" : "ami-03d0ae7c0aa0b03e1"},
+            "ca-central-1" : { "64" : "ami-0db5966371975a1e4"},
+            "eu-central-1" : { "64" : "ami-00156f1e923486e87"},
+            "eu-west-1" : { "64" : "ami-03ab7e649660e479d"},
+            "eu-west-2" : { "64" : "ami-02091ebf63fa1a7f0"},
+            "eu-west-3" : { "64" : "ami-0744ce138a0dc9929"},
+            "eu-north-1" : { "64" : "ami-0ff2ac0a6651db2ee"},
+            "ap-southeast-1" : { "64" : "ami-0e970a5500a79bee8"},
+            "ap-southeast-2" : { "64" : "ami-09231f01688a835ec"},
+            "ap-south-1" : { "64" : "ami-05d7d181acc353182"},
+            "ap-northeast-1" : { "64" : "ami-00a2cd8ed572d2e35"},
+            "ap-northeast-2" : { "64" : "ami-0d3319aee4fd7f496"},
+            "sa-east-1" : { "64" : "ami-0f15bfe6af0995b01"}
         }
     },
     "Resources": {
@@ -584,7 +584,7 @@
                     "configSets" : { "ConfigureAndInitialize" : ["Configure","Initialize"]},
                     "Configure": {
                         "files": {
-                            "/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/classes/repository.properties" : {
+                            "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/classes/repository.properties" : {
                                 "content" : { "Fn::Join" : ["", [
                                     "dbUsername=",{ "Ref" : "RDSUser" },"\n",
                                     "dbPassword=",{ "Ref" : "RDSPassword" },"\n",
@@ -601,7 +601,7 @@
                             }
                         },
                         "services" : {
-                            "tomcat8" : {
+                            "tomcat" : {
                                 "enabled" : "false",
                                 "ensureRunning" : "false"
                             }
@@ -704,7 +704,7 @@
                     },
                     "Configure": {
                         "files": {
-                            "/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/classes/repository.properties" : {
+                            "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/classes/repository.properties" : {
                                 "content" : {
                                     "Fn::Join": [
                                         "",
@@ -732,7 +732,7 @@
                                 "owner" : "tomcat",
                                 "group" : "tomcat"
                             },
-                            "/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/js.aws.properties" : {
+                            "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/js.aws.properties" : {
                                 "content" : {
                                     "Fn::Join": [
                                         "", [
@@ -751,17 +751,29 @@
                         },
 
                         "commands" : {
-                            "1-enableCluster" :{
-                                "command" : "/bin/cp -fR /usr/share/jrs_dist/clusterConfig/* /var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/",
-                                "ignoreErrors" : "false"
-                            },
                             "2-pullLicense" : {
-                                "command" : { "Fn::Join" : ["", ["/usr/bin/aws --region ",{ "Ref": "AWS::Region" }," s3 cp s3://",{"Fn::If": ["CreateS3Bucket",{"Ref": "S3Bucket"},{"Ref": "S3BucketName"}]},"/jasperserver.license /var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/jasperserver.license"]]},
+                                "command" : { "Fn::Join" : ["", ["/usr/bin/aws --region ",{ "Ref": "AWS::Region" }," s3 cp s3://",{"Fn::If": ["CreateS3Bucket",{"Ref": "S3Bucket"},{"Ref": "S3BucketName"}]},"/jasperserver.license /var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/jasperserver.license"]]},
                                 "ignoreErrors" : "true"
                             },
                             "3-pullCustomizations" : {
-                                "command" : { "Fn::Join" : ["", ["/usr/bin/aws --region ",{ "Ref": "AWS::Region" }," s3 cp s3://",{"Fn::If": ["CreateS3Bucket",{"Ref": "S3Bucket"},{"Ref": "S3BucketName"}]},"/ /var/lib/tomcat8/ --recursive"]]},
+                                "command" : { "Fn::Join" : ["", ["/usr/bin/aws --region ",{ "Ref": "AWS::Region" }," s3 cp s3://",{"Fn::If": ["CreateS3Bucket",{"Ref": "S3Bucket"},{"Ref": "S3BucketName"}]},"/ /var/lib/tomcat/ --recursive"]]},
                                 "ignoreErrors" : "true"
+                            },
+                            "4-enableCluster": {
+                                "command": {
+                                    "Fn::Join": [
+                                        " ",
+                                        [
+                                            "rm -fv",
+                                            "/usr/share/jrs_dist/clusterConfig/applicationContext.xml &&",
+                                            "/bin/cp -rf /usr/share/jrs_dist/clusterConfig/*",
+                                            "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/ &&",
+                                            "sed -i -r \"s/(.*)(sysProperties,transactionManagerConfiguration)(.*)/\\1\\2,broker-1\\3/\"",
+                                            "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext.xml"
+                                        ]
+                                    ]
+                                },
+                                "ignoreErrors": "false"
                             }
                         }
 
@@ -769,11 +781,11 @@
                     },
                     "Restart" : {
                         "services" : {
-                            "tomcat8" : {
+                            "tomcat" : {
                                 "enabled" : "true",
                                 "ensureRunning" : "true",
-                                "files" : ["/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/classes/repository.properties","/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/js.aws.properties"],
-                                "commands" : ["1-enableCluster","2-pullLicense","3-pullCustomizations"]
+                                "files" : ["/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/classes/repository.properties","/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/js.aws.properties"],
+                                "commands" : ["2-pullLicense","3-pullCustomizations","4-enableCluster"]
                             }
                         }
                     }
