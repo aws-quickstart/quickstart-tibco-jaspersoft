@@ -949,8 +949,8 @@
                 "MinSize": {
                     "Ref": "WorkloadNodesMinSize"
                 },
-                "NotificationConfiguration": {
-                  "Fn::If": ["NotificationsEnabled",{
+                "NotificationConfigurations": {
+                  "Fn::If": ["NotificationsEnabled",[{
                     "TopicARN": {
                       "Ref": "NotificationTopic"
                     },
@@ -961,7 +961,7 @@
                       "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
                       "autoscaling:TEST_NOTIFICATION"
                     ]
-                  },{"Ref": "AWS::NoValue"}]
+                  }],{"Ref": "AWS::NoValue"}]
                 },
                 "Tags": [
                     {
