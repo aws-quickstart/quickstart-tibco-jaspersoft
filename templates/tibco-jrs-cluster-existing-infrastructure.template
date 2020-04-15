@@ -75,8 +75,8 @@
                 "PublicSubnet2ID": {
                     "default": "Public subnet 2 ID"
                 },
-                "RDAddress": {
-                    "default": "RDS database address"
+                "RDSAddress": {
+                    "default": "RDS database domain name or IP address"
                 },
                 "RDSPort": {
                     "default": "RDS database port"
@@ -618,7 +618,6 @@
                     }
                 }
             },
-            "Version": "2018-11-20",
             "Properties": {
                 "InstanceInitiatedShutdownBehavior" : "stop",
                 "ImageId": {"Fn::FindInMap" : [ "AWSAMIRegionMap", { "Ref" : "AWS::Region" }, "64" ]},
