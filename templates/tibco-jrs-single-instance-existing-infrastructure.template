@@ -166,7 +166,12 @@
                 },
                 "Yes"
             ]
-        }
+        },
+		"GovCloudRegion": { "Fn::Or" : [
+				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+			]
+		}
     },
     "Mappings": {
         "AWSAMIRegionMap": {
@@ -185,7 +190,8 @@
             "ap-south-1" : { "64" : "ami-0a11732c71571cfe0"},
             "ap-northeast-1" : { "64" : "ami-0e257bc476d3ab29f"},
             "ap-northeast-2" : { "64" : "ami-028f940412b9012f2"},
-            "sa-east-1" : { "64" : "ami-04e13931d5525b127"}
+            "sa-east-1" : { "64" : "ami-04e13931d5525b127"},
+			"us-gov-west-1" : { "64" : "ami-51b59e30"}
         }
     },
     "Resources": {
@@ -244,8 +250,15 @@
                                             "Fn::Join": [
                                                 "",
                                                 [
-                                                    "arn:aws:s3:::",
-                                                    {
+													"arn:", {
+													 
+														"Fn::If": [
+															"GovCloudRegion",
+															"aws-us-gov",
+															"aws"
+														]
+													},
+													":s3:::", {
                                                         "Fn::If": [
                                                             "CreateS3Bucket",
                                                             {"Ref": "S3Bucket"},
@@ -261,8 +274,15 @@
                                             "Fn::Join": [
                                                 "",
                                                 [
-                                                    "arn:aws:s3:::",
-                                                    {
+													"arn:", {
+													 
+														"Fn::If": [
+															"GovCloudRegion",
+															"aws-us-gov",
+															"aws"
+														]
+													},
+													":s3:::", {
                                                         "Fn::If": [
                                                             "CreateS3Bucket",
                                                             {"Ref": "S3Bucket"},
