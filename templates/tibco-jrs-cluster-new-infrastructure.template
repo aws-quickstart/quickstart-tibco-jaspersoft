@@ -343,12 +343,30 @@
         }
 
     },
-    "Resources": {
+	"Conditions" : {
+		"GovCloudRegion": { "Fn::Or" : [
+				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+			]
+		}
+    },
+	"Resources": {
         "VPCStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template"
+                    "Fn::Sub": [
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
+                                "GovCloudRegion",
+                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
+                                ""
+                             ]
+                          }
+                       }
+					]
                 },
                 "Parameters": {
                     "AvailabilityZones": {
@@ -386,7 +404,18 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template"
+                    "Fn::Sub": [
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
+                                "GovCloudRegion",
+                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
+                                ""
+                             ]
+                          }
+                       }
+					]
                 },
                 "Parameters": {
                     "BastionAMIOS": {
@@ -424,7 +453,21 @@
                             "VPCStack",
                             "Outputs.VPCID"
                         ]
-                    }
+                    },
+                    "BastionBanner": {
+                    "Fn::Sub": [
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/scripts/banner_message.txt",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
+                                "GovCloudRegion",
+                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
+                                ""
+                             ]
+                          }
+                       }
+					 ]
+					}
                 }
             }
         },
@@ -433,7 +476,18 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/rds-postgres-cluster.template"
+                    "Fn::Sub": [
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/rds-postgres-cluster.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
+                                "GovCloudRegion",
+                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
+                                ""
+                             ]
+                          }
+                       }
+					]
                 },
                 "Parameters": {
                     "RDSDbSize": {
@@ -483,7 +537,18 @@
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
-                    "Fn::Sub": "https://${QSS3BucketName}.s3.amazonaws.com/${QSS3KeyPrefix}templates/tibco-jrs-cluster-existing-infrastructure.template"
+                    "Fn::Sub": [
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-cluster-existing-infrastructure.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
+                                "GovCloudRegion",
+                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
+                                ""
+                             ]
+                          }
+                       }
+					]
                 },
                 "Parameters": {
                     "WorkloadInstanceType": {
