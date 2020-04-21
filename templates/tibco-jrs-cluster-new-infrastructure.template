@@ -58,11 +58,20 @@
                 },
                 {
                     "Label": {
-                        "default": "AWS Quick Start configuration"
+                        "default": "Jaspersoft Quick Start configuration"
                     },
                     "Parameters": [
                         "QSS3BucketName",
                         "QSS3KeyPrefix"
+                    ]
+                },
+                {
+                    "Label": {
+                        "default": "AWS Quick Start module configuration"
+                    },
+                    "Parameters": [
+                        "AWSQSS3BucketName",
+                        "AWSQSS3KeyPrefix"
                     ]
                 }
 
@@ -96,10 +105,16 @@
                     "default": "Public subnet 2 CIDR"
                 },
                 "QSS3BucketName": {
-                    "default": "Quick Start S3 bucket name"
+                    "default": "Jaspersoft Quick Start S3 bucket name"
                 },
                 "QSS3KeyPrefix": {
-                    "default": "Quick Start S3 key prefix"
+                    "default": "Jaspersoft Quick Start S3 key prefix"
+                },
+                "AWSQSS3BucketName": {
+                    "default": "AWS Quick Start S3 bucket name"
+                },
+                "AWSQSS3KeyPrefix": {
+                    "default": "AWSQuick Start S3 key prefix"
                 },
                 "RDSDbSize": {
                     "default": "RDS database instance type"
@@ -356,7 +371,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+					   "https://aws-quickstart.s3${QSS3Region}.${AWS::URLSuffix}/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -405,7 +420,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+					   "https://aws-quickstart.s3${QSS3Region}.${AWS::URLSuffix}/quickstart-linux-bastion/templates/linux-bastion.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -439,12 +454,13 @@
                             "Outputs.PublicSubnet2ID"
                         ]
                     },
-                    "QSS3BucketName": {
-                        "Ref": "QSS3BucketName"
-                    },
-                    "QSS3KeyPrefix": {
-                        "Fn::Sub": "${QSS3KeyPrefix}submodules/quickstart-linux-bastion/"
-                    },
+					"QSS3BucketRegion": {
+						 "Fn::If": [
+							"GovCloudRegion",
+							{"Ref": "AWS::Region"},
+							{"Ref": "AWS::NoValue"}
+						 ]
+					},
                     "RemoteAccessCIDR": {
                         "Ref": "RemoteAccessCIDR"
                     },
@@ -454,20 +470,8 @@
                             "Outputs.VPCID"
                         ]
                     },
-                    "BastionBanner": {
-                    "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/scripts/banner_message.txt",
-                       {
-                          "QSS3Region": {
-                             "Fn::If": [
-                                "GovCloudRegion",
-                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
-                                ""
-                             ]
-                          }
-                       }
-					 ]
-					}
+                    "EnableBanner": "false",
+                    "EnableTCPForwarding": "true"
                 }
             }
         },
@@ -549,7 +553,7 @@
                           }
                        }
 					]
-                },
+				},
                 "Parameters": {
                     "WorkloadInstanceType": {
                         "Ref": "WorkloadInstanceType"
