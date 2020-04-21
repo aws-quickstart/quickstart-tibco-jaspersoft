@@ -248,7 +248,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+					   "https://aws-quickstart.s3${QSS3Region}.${AWS::URLSuffix}/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -297,7 +297,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					"https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+					   "https://aws-quickstart.s3${QSS3Region}.${AWS::URLSuffix}/quickstart-linux-bastion/templates/linux-bastion.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -331,12 +331,13 @@
                             "Outputs.PublicSubnet2ID"
                         ]
                     },
-                    "QSS3BucketName": {
-                        "Ref": "QSS3BucketName"
-                    },
-                    "QSS3KeyPrefix": {
-                        "Fn::Sub": "${QSS3KeyPrefix}submodules/quickstart-linux-bastion/"
-                    },
+					"QSS3BucketRegion": {
+						 "Fn::If": [
+							"GovCloudRegion",
+							{"Ref": "AWS::Region"},
+							{"Ref": "AWS::NoValue"}
+						 ]
+					},
                     "RemoteAccessCIDR": {
                         "Ref": "RemoteAccessCIDR"
                     },
@@ -345,21 +346,7 @@
                             "VPCStack",
                             "Outputs.VPCID"
                         ]
-                    },
-                    "BastionBanner": {
-                    "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/scripts/banner_message.txt",
-                       {
-                          "QSS3Region": {
-                             "Fn::If": [
-                                "GovCloudRegion",
-                                { "Fn::Join": [ "", [ "-", {"Ref": "AWS::Region"} ] ]},
-                                ""
-                             ]
-                          }
-                       }
-					 ]
-					}
+                    }
                 }
             }
         },
