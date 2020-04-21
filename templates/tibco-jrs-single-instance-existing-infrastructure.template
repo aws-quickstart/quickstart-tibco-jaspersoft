@@ -383,13 +383,15 @@
 
                 },
                 "Restart" : {
-                  "services" : {
-                    "tomcat8" : {
-                      "enabled" : "true",
-                      "ensureRunning" : "true",
-                      "commands" : ["1-setInitialPassword","2-disableAndExpireUsers","3-pullLicense","4-pullCustomizations","5-WriteInitializationMarker"]
+                  "sysvinit" : {
+                    "services" : {
+                      "tomcat8" : {
+                        "enabled" : "true",
+                        "ensureRunning" : "true",
+                        "commands" : ["1-setInitialPassword","2-disableAndExpireUsers","3-pullLicense","4-pullCustomizations","5-WriteInitializationMarker"]
+                      }
                     }
-                  }
+				  }
                 }
               }
             },
