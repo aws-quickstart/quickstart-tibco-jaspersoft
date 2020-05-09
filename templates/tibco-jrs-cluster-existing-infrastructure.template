@@ -320,9 +320,7 @@
         "ap-south-1" : { "64" : "ami-0a11732c71571cfe0"},
         "ap-northeast-1" : { "64" : "ami-0e257bc476d3ab29f"},
         "ap-northeast-2" : { "64" : "ami-028f940412b9012f2"},
-        "sa-east-1" : { "64" : "ami-04e13931d5525b127"},
-        "us-gov-east-1"  : { "64" : "ami-051d5d4ffc355ad48"},
-        "us-gov-west-1"  : { "64" : "ami-4fb5852e"}
+        "sa-east-1" : { "64" : "ami-04e13931d5525b127"}
 	}
     },
     "Resources": {
