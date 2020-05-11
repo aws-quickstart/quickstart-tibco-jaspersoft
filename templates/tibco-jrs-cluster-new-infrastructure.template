@@ -55,7 +55,7 @@
                 },
                 {
                     "Label": {
-                        "default": "Jaspersoft Quick Start CloudFormation configuration"
+                        "default": "AWS Quick Start configuration"
                     },
                     "Parameters": [
                         "QSS3BucketName",
@@ -92,10 +92,10 @@
                     "default": "Public subnet 2 CIDR"
                 },
                 "QSS3BucketName": {
-                    "default": "Jaspersoft Quick Start S3 bucket name"
+                    "default": "Quick Start S3 bucket name"
                 },
                 "QSS3KeyPrefix": {
-                    "default": "Jaspersoft Quick Start S3 key prefix"
+                    "default": "Quick Start S3 key prefix"
                 },
                 "RDSDbSize": {
                     "default": "Repository RDS database instance type"
@@ -147,18 +147,18 @@
 
         },
         "BastionAMIOS": {
-            "Description": "The Linux distribution for the AMI to be used for the bastion instances.",
-            "Type": "String",
-            "AllowedValues": [
-				"Amazon-Linux2-HVM",
-                "Amazon-Linux-HVM",
-                "CentOS-7-HVM",
-                "Ubuntu-Server-14.04-LTS-HVM",
-                "Ubuntu-Server-16.04-LTS-HVM"
-            ],
-            "Default": "Amazon-Linux2-HVM",
-            "MinLength": "1",
-            "ConstraintDescription" : "Required"
+           "Description":"The Linux distribution for the AMI to be used for the bastion instances.",
+           "Type":"String",
+           "AllowedValues":[
+              "Amazon-Linux2-HVM",
+              "Amazon-Linux-HVM",
+              "CentOS-7-HVM",
+              "Ubuntu-Server-14.04-LTS-HVM",
+              "Ubuntu-Server-16.04-LTS-HVM"
+           ],
+           "Default":"Amazon-Linux2-HVM",
+           "MinLength":"1",
+           "ConstraintDescription":"Required"
         },
         "BastionInstanceType": {
             "Description": "Amazon EC2 instance type for the bastion instances. Has to be available for the deployment region.",
@@ -220,21 +220,21 @@
             "ConstraintDescription": "CIDR block parameter must be in the form x.x.x.x/16-28"
         },
         "QSS3BucketName": {
-            "Description": "S3 bucket name for the Quick Start assets.",
+            "Description": "S3 bucket name for the Quick Start assets. This string can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
             "Type": "String",
             "Default": "aws-quickstart",
             "MinLength": "1",
             "MaxLength": "64",
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
-            "ConstraintDescription": "Can include alphanumeric characters, and hyphens (-). It cannot start or end with a hyphen (-)."
+            "ConstraintDescription": "Quick Start bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-)."
         },
         "QSS3KeyPrefix": {
-            "Description": "S3 key prefix for the Quick Start assets.",
+            "Description": "S3 key prefix for the Quick Start assets. Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
             "Type": "String",
             "Default": "quickstart-tibco-jaspersoft/",
             "MaxLength": "64",
             "AllowedPattern": "^[0-9a-zA-Z-/]*$",
-            "ConstraintDescription": "Can include alphanumeric characters, hyphens (-), and forward slash (/)."
+            "ConstraintDescription": "Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/)."
         },
         "RemoteAccessCIDR": {
             "Description": "The CIDR IP range that is permitted to access the bastions. We recommend that you set this value to a trusted IP range.",
@@ -303,7 +303,7 @@
             "ConstraintDescription" : "Required. Must be between 1 and 10."
         },
         "WorkloadNodesMinSize": {
-            "Description": "Maximum number of nodes in the Auto Scaling group.",
+            "Description": "Minimum number of nodes in the Auto Scaling group.",
             "Type": "Number",
             "Default": "1",
             "MinValue": "1",

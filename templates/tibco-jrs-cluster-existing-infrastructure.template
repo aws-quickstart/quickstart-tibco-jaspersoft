@@ -190,7 +190,7 @@
             "ConstraintDescription" : "Required. Must be between 1 and 10."
         },
         "WorkloadNodesMinSize": {
-            "Description": "Maximum number of nodes in the Auto Scaling group.",
+            "Description": "Minimum number of nodes in the Auto Scaling group.",
             "Type": "Number",
             "Default": "1",
             "MinValue": "1",
@@ -453,70 +453,76 @@
                 "Path": "/",
                 "Policies": [
                     {
-                        "PolicyName": "WorkloadSetup",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "cloudwatch:PutMetricData",
-                                        "cloudwatch:EnableAlarmActions",
-                                        "cloudwatch:PutMetricAlarm"
-                                    ],
-                                    "Resource": "*"
-                                },
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "s3:*"
-                                    ],
-                                    "Resource": [
-                                        {
-                                            "Fn::Join": [
-                                                "",
-                                                [
-													"arn:", {
-														"Ref": "AWS::Partition"
-													},
-													":s3:::", {
-														"Fn::If": [
-															"CreateS3Bucket", {
-																"Ref": "S3Bucket"
-															}, {
-																"Ref": "S3BucketName"
-															}
-                                                        ]
-
-                                                    },
-                                                    ""
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "Fn::Join": [
-                                                "",
-                                                [
-													"arn:", {
-														"Ref": "AWS::Partition"
-													},
-													":s3:::", {
-														"Fn::If": [
-															"CreateS3Bucket", {
-																"Ref": "S3Bucket"
-															}, {
-																"Ref": "S3BucketName"
-															}
-                                                        ]
-
-                                                    },
-                                                    "/*"
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
+                       "PolicyName":"WorkloadSetup",
+                       "PolicyDocument":{
+                          "Statement":[
+                             {
+                                "Effect":"Allow",
+                                "Action":[
+                                   "cloudwatch:PutMetricData",
+                                   "cloudwatch:EnableAlarmActions",
+                                   "cloudwatch:PutMetricAlarm"
+                                ],
+                                "Resource":"*"
+                             },
+                             {
+                                "Effect":"Allow",
+                                "Action":[
+                                   "s3:*"
+                                ],
+                                "Resource":[
+                                   {
+                                      "Fn::Join":[
+                                         "",
+                                         [
+                                            "arn:",
+                                            {
+                                               "Ref":"AWS::Partition"
+                                            },
+                                            ":s3:::",
+                                            {
+                                               "Fn::If":[
+                                                  "CreateS3Bucket",
+                                                  {
+                                                     "Ref":"S3Bucket"
+                                                  },
+                                                  {
+                                                     "Ref":"S3BucketName"
+                                                  }
+                                               ]
+                                            },
+                                            ""
+                                         ]
+                                      ]
+                                   },
+                                   {
+                                      "Fn::Join":[
+                                         "",
+                                         [
+                                            "arn:",
+                                            {
+                                               "Ref":"AWS::Partition"
+                                            },
+                                            ":s3:::",
+                                            {
+                                               "Fn::If":[
+                                                  "CreateS3Bucket",
+                                                  {
+                                                     "Ref":"S3Bucket"
+                                                  },
+                                                  {
+                                                     "Ref":"S3BucketName"
+                                                  }
+                                               ]
+                                            },
+                                            "/*"
+                                         ]
+                                      ]
+                                   }
+                                ]
+                             }
+                          ]
+                       }
                     },
                     {
                         "PolicyName": "JRSRolePolicy",

@@ -204,76 +204,84 @@
                 "Path": "/",
                 "Policies": [
                     {
-                        "PolicyName": "WorkloadSetup",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "cloudwatch:PutMetricData",
-                                        "cloudwatch:EnableAlarmActions",
-                                        "cloudwatch:PutMetricAlarm"
-                                    ],
-                                    "Resource": "*"
-                                },
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "s3:*"
-                                    ],
-                                    "Resource": [
-                                        {
-                                            "Fn::Join": [
-                                                "",
-                                                [
-													"arn:", {
-													 
-														"Fn::If": [
-															"GovCloudRegion",
-															"aws-us-gov",
-															"aws"
-														]
-													},
-													":s3:::", {
-                                                        "Fn::If": [
-                                                            "CreateS3Bucket",
-                                                            {"Ref": "S3Bucket"},
-                                                            {"Ref": "S3BucketName"}
-                                                        ]
-
-                                                    },
-                                                    ""
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "Fn::Join": [
-                                                "",
-                                                [
-													"arn:", {
-													 
-														"Fn::If": [
-															"GovCloudRegion",
-															"aws-us-gov",
-															"aws"
-														]
-													},
-													":s3:::", {
-                                                        "Fn::If": [
-                                                            "CreateS3Bucket",
-                                                            {"Ref": "S3Bucket"},
-                                                            {"Ref": "S3BucketName"}
-                                                        ]
-
-                                                    },
-                                                    "/*"
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
+                       "PolicyName":"WorkloadSetup",
+                       "PolicyDocument":{
+                          "Statement":[
+                             {
+                                "Effect":"Allow",
+                                "Action":[
+                                   "cloudwatch:PutMetricData",
+                                   "cloudwatch:EnableAlarmActions",
+                                   "cloudwatch:PutMetricAlarm"
+                                ],
+                                "Resource":"*"
+                             },
+                             {
+                                "Effect":"Allow",
+                                "Action":[
+                                   "s3:*"
+                                ],
+                                "Resource":[
+                                   {
+                                      "Fn::Join":[
+                                         "",
+                                         [
+                                            "arn:",
+                                            {
+                                               "Fn::If":[
+                                                  "GovCloudRegion",
+                                                  "aws-us-gov",
+                                                  "aws"
+                                               ]
+                                            },
+                                            ":s3:::",
+                                            {
+                                               "Fn::If":[
+                                                  "CreateS3Bucket",
+                                                  {
+                                                     "Ref":"S3Bucket"
+                                                  },
+                                                  {
+                                                     "Ref":"S3BucketName"
+                                                  }
+                                               ]
+                                            },
+                                            ""
+                                         ]
+                                      ]
+                                   },
+                                   {
+                                      "Fn::Join":[
+                                         "",
+                                         [
+                                            "arn:",
+                                            {
+                                               "Fn::If":[
+                                                  "GovCloudRegion",
+                                                  "aws-us-gov",
+                                                  "aws"
+                                               ]
+                                            },
+                                            ":s3:::",
+                                            {
+                                               "Fn::If":[
+                                                  "CreateS3Bucket",
+                                                  {
+                                                     "Ref":"S3Bucket"
+                                                  },
+                                                  {
+                                                     "Ref":"S3BucketName"
+                                                  }
+                                               ]
+                                            },
+                                            "/*"
+                                         ]
+                                      ]
+                                   }
+                                ]
+                             }
+                          ]
+                       }
                     },
                     {
                         "PolicyName": "JRSRolePolicy",
