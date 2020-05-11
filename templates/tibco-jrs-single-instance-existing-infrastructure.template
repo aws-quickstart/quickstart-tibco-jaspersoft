@@ -60,7 +60,7 @@
             "Type": "AWS::EC2::KeyPair::KeyName",
             "MinLength": "1",
             "MaxLength": "64",
-            "ConstraintDescription" : "PRequired"
+            "ConstraintDescription" : "Required"
         },
         "PublicSubnet1ID": {
             "Description": "ID of public subnet 1 in Availability Zone 1 for the Application Load Balancer (e.g., subnet-9bc642ac).",
@@ -153,7 +153,7 @@
     "Mappings": {
         "AWSAMIRegionMap": {
         "us-east-1" : { "64" : "ami-0a0548e03e545a270"},
-        "us-east-2" : { "64" : "ami-0322118f66ff04e22"},
+        "us-east-2" : { "64" : "ami-05c459d72de133e8d"},
         "us-west-1" : { "64" : "ami-047906311ba310310"},
         "us-west-2" : { "64" : "ami-083a0cbc5ec80247d"},
         "ca-central-1" : { "64" : "ami-0940529e030cff4bb"},
