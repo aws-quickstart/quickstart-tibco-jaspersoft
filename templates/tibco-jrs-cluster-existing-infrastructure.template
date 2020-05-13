@@ -320,7 +320,9 @@
         "ap-south-1" : { "64" : "ami-0a11732c71571cfe0"},
         "ap-northeast-1" : { "64" : "ami-0e257bc476d3ab29f"},
         "ap-northeast-2" : { "64" : "ami-028f940412b9012f2"},
-        "sa-east-1" : { "64" : "ami-04e13931d5525b127"}
+        "sa-east-1" : { "64" : "ami-04e13931d5525b127"},
+        "us-gov-east-1"  : { "64" : "ami-051d5d4ffc355ad48"},
+        "us-gov-west-1"  : { "64" : "ami-4fb5852e"}
 	}
     },
     "Resources": {
@@ -774,9 +776,9 @@
                                 "files" : ["/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/classes/repository.properties","/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/js.aws.properties"],
                                 "commands" : ["1-pullLicense","2-pullCustomizations","3-enableCluster"]
                               }
-                          }
+                            }
                         }
-                  }
+                   }
 				}
              },
             "Properties": {
