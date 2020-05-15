@@ -352,7 +352,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://aws-quickstart.s3${QSS3Region}.${AWS::URLSuffix}/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -401,7 +401,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://aws-quickstart.s3${QSS3Region}.${AWS::URLSuffix}/quickstart-linux-bastion/templates/linux-bastion.template",
+					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
