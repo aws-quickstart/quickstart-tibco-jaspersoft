@@ -467,7 +467,6 @@
             "Type": "AWS::S3::Bucket",
             "Condition" : "CreateS3Bucket",
             "Properties": {
-                "BucketName" : { "Ref": "S3BucketName" },
                 "AccessControl": "BucketOwnerFullControl"
             },
             "DeletionPolicy" : "Retain"
