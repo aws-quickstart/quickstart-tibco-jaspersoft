@@ -339,20 +339,20 @@
         }
 
     },
-	"Conditions" : {
-		"GovCloudRegion": { "Fn::Or" : [
-				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
-				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
-			]
-		}
+    "Conditions" : {
+        "GovCloudRegion": { "Fn::Or" : [
+            {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+            {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+            ]
+        }
     },
-	"Resources": {
+    "Resources": {
         "VPCStack": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                       "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -362,7 +362,7 @@
                              ]
                           }
                        }
-					]
+                    ]
                 },
                 "Parameters": {
                     "AvailabilityZones": {
@@ -401,7 +401,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -411,7 +411,7 @@
                              ]
                           }
                        }
-					]
+                    ]
                 },
                 "Parameters": {
                     "BastionAMIOS": {
@@ -435,13 +435,13 @@
                             "Outputs.PublicSubnet2ID"
                         ]
                     },
-					"QSS3BucketRegion": {
-						 "Fn::If": [
-							"GovCloudRegion",
-							{"Ref": "AWS::Region"},
-							{"Ref": "AWS::NoValue"}
-						 ]
-					},
+                    "QSS3BucketRegion": {
+                        "Fn::If": [
+                            "GovCloudRegion",
+                            {"Ref": "AWS::Region"},
+                            {"Ref": "AWS::NoValue"}
+                        ]
+                    },
                     "RemoteAccessCIDR": {
                         "Ref": "RemoteAccessCIDR"
                     },
@@ -462,7 +462,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/rds-postgres-cluster.template",
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/rds-postgres-cluster.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -472,7 +472,7 @@
                              ]
                           }
                        }
-					]
+                    ]
                 },
                 "Parameters": {
                     "RDSDbSize": {
@@ -484,7 +484,7 @@
                     "RDSPassword": {
                         "Ref": "RDSPassword"
                     },
-					"RDSMultiAz" : "true",
+                    "RDSMultiAz" : "true",
                     "PrivateSubnet1ID": {
                         "Fn::GetAtt": [
                             "VPCStack",
@@ -524,7 +524,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-cluster-existing-infrastructure.template",
+                       "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-cluster-existing-infrastructure.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -534,8 +534,8 @@
                              ]
                           }
                        }
-					]
-				},
+                    ]
+                },
                 "Parameters": {
                     "WorkloadInstanceType": {
                         "Ref": "WorkloadInstanceType"

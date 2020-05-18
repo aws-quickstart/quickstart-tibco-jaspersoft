@@ -111,7 +111,7 @@
             "Default": "Amazon-Linux2-HVM",
             "Type": "String",
             "AllowedValues": [
-				"Amazon-Linux2-HVM",
+                "Amazon-Linux2-HVM",
                 "Amazon-Linux-HVM",
                 "CentOS-7-HVM",
                 "Ubuntu-Server-14.04-LTS-HVM",
@@ -224,12 +224,12 @@
             "ConstraintDescription" : "Can contain only alphanumeric characters, minus and underscores."
         }
     },
-	"Conditions" : {
-		"GovCloudRegion": { "Fn::Or" : [
-				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
-				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
-			]
-		}
+    "Conditions" : {
+        "GovCloudRegion": { "Fn::Or" : [
+                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+            ]
+        }
     },
     "Resources": {
         "VPCStack": {
@@ -237,7 +237,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -247,7 +247,7 @@
                              ]
                           }
                        }
-					]
+                    ]
                 },
                 "Parameters": {
                     "AvailabilityZones": {
@@ -286,7 +286,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -296,7 +296,7 @@
                              ]
                           }
                        }
-					]
+                    ]
                 },
                 "Parameters": {
                     "BastionAMIOS": {
@@ -320,13 +320,13 @@
                             "Outputs.PublicSubnet2ID"
                         ]
                     },
-					"QSS3BucketRegion": {
-						 "Fn::If": [
-							"GovCloudRegion",
-							{"Ref": "AWS::Region"},
-							{"Ref": "AWS::NoValue"}
-						 ]
-					},
+                    "QSS3BucketRegion": {
+                        "Fn::If": [
+                            "GovCloudRegion",
+                            {"Ref": "AWS::Region"},
+                            {"Ref": "AWS::NoValue"}
+                        ]
+                    },
                     "RemoteAccessCIDR": {
                         "Ref": "RemoteAccessCIDR"
                     },
@@ -348,7 +348,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-					   "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-single-instance-existing-infrastructure.template",
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-single-instance-existing-infrastructure.template",
                        {
                           "QSS3Region": {
                              "Fn::If": [
@@ -358,7 +358,7 @@
                              ]
                           }
                        }
-					]
+                    ]
                 },
                 "Parameters": {
                     "WorkloadInstanceType": {
