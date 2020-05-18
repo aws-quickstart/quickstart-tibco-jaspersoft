@@ -10,7 +10,8 @@
                     },
                     "Parameters": [
                         "VPCID",
-                        "PublicSubnet1ID"
+                        "PublicSubnet1ID",
+                        "BastionSecurityGroupID"
                     ]
                 },
                 {
@@ -18,17 +19,8 @@
                         "default": "Amazon EC2 configuration"
                     },
                     "Parameters": [
+                        "WorkloadInstanceType",
                         "KeyPairName",
-                        "BastionSecurityGroupID",
-                        "WorkloadInstanceType"
-                    ]
-                },
-                {
-                    "Label": {
-                        "default": "TIBCO JasperReports Server node configuration"
-                    },
-                    "Parameters": [
-                        "NewBucket",
                         "S3BucketName"
                     ]
                 }
@@ -49,9 +41,6 @@
                 "WorkloadInstanceType": {
                     "default": "Server instance Type"
                 },
-                "NewBucket" : {
-                    "default" : "S3 bucket for license and customization?"
-                },
                 "S3BucketName": {
                     "default" : "Name of S3 bucket for license and customization"
                 }
@@ -64,58 +53,46 @@
             "Type": "AWS::EC2::SecurityGroup::Id",
             "MinLength": "1",
             "MaxLength": "64",
-            "ConstraintDescription" : "Parameter value is Required"
+            "ConstraintDescription" : "Required"
         },
         "KeyPairName": {
             "Description": "Name of an existing EC2 key pair, which allows you to securely connect to your instance after it launches.",
             "Type": "AWS::EC2::KeyPair::KeyName",
             "MinLength": "1",
             "MaxLength": "64",
-            "ConstraintDescription" : "Parameter value is Required"
+            "ConstraintDescription" : "Required"
         },
         "PublicSubnet1ID": {
             "Description": "ID of public subnet 1 in Availability Zone 1 for the Application Load Balancer (e.g., subnet-9bc642ac).",
             "Type": "AWS::EC2::Subnet::Id",
             "MinLength": "1",
             "MaxLength": "64",
-            "ConstraintDescription" : "Parameter value is Required"
+            "ConstraintDescription" : "Required"
         },
         "VPCID": {
             "Description": "ID of your existing VPC for deployment.",
             "Type": "AWS::EC2::VPC::Id",
             "MinLength": "1",
             "MaxLength": "64",
-            "ConstraintDescription" : "Parameter value is Required"
+            "ConstraintDescription" : "Required"
         },
         "WorkloadInstanceType": {
+            "Description": "Amazon EC2 instance type for the TIBCO JasperReports Server instances.. Has to be available for the deployment region.",
+            "Type": "String",
             "AllowedValues": [
-                "m4.large","m4.xlarge","m4.2xlarge","m4.4xlarge","m4.10xlarge","r3.xlarge","r3.2xlarge","c4.xlarge","m5.large"
+                "m4.large","m4.xlarge","m4.2xlarge","m4.4xlarge","m4.10xlarge","r3.xlarge","r3.2xlarge","c4.xlarge","c4.2xlarge","m5.large"
             ],
-            "ConstraintDescription": "Must contain valid instance type",
             "Default": "m4.xlarge",
-            "Description": "Amazon EC2 instance type for the TIBCO JasperReports instance.",
-            "Type": "String"
-        },
-        "NewBucket": {
-            "AllowedValues": [
-                "Yes",
-                "No"
-            ],
-            "ConstraintDescription": "The value should be Yes/No.",
-            "Default": "No",
-            "Description": "A new S3 bucket. Choose Yes to create a new bucket, where you can upload third-party drivers, OSGI bundles, certificates, plugins, etc., to extend the base image later.",
-            "Type": "String"
-        },
-        "S3BucketName": {
-            "Description" : "Name of the new S3 bucket. Enter a unique name that does not include uppercase characters.",
-            "Type" : "String",
-            "Default" : "new-bucket-for-license-and-customization",
             "MinLength": "1",
+            "ConstraintDescription": "Must contain valid instance type."
+       },
+        "S3BucketName": {
+            "Description" : "S3 bucket for license and customizations. Enter name of existing bucket, or leave blank to create a new bucket.",
+            "Type" : "String",
+            "Default" : "",
+            "AllowedPattern" : "[-_a-z0-9]*",
             "MaxLength": "64"
-
         }
-
-
     },
     "Rules": {
         "KeyPairsNotEmpty": {
@@ -162,30 +139,37 @@
         "CreateS3Bucket": {
             "Fn::Equals": [
                 {
-                    "Ref": "NewBucket"
+                    "Ref": "S3BucketName"
                 },
-                "Yes"
+                ""
             ]
-        }
+        },
+		"GovCloudRegion": { "Fn::Or" : [
+				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+			]
+		}
     },
     "Mappings": {
         "AWSAMIRegionMap": {
-            "us-east-1" : { "64" : "ami-0cf9d58847935a7b0"},
-            "us-east-2" : { "64" : "ami-0322118f66ff04e22"},
-            "us-west-1" : { "64" : "ami-047906311ba310310"},
-            "us-west-2" : { "64" : "ami-083a0cbc5ec80247d"},
-            "ca-central-1" : { "64" : "ami-0940529e030cff4bb"},
-            "eu-central-1" : { "64" : "ami-0fc5631ac1eebb717"},
-            "eu-west-1" : { "64" : "ami-0f71d26edaf94e816"},
-            "eu-west-2" : { "64" : "ami-0eca2b77931ad3dfe"},
-            "eu-west-3" : { "64" : "ami-0c5a0d2263e5b6dc0"},
-            "eu-north-1" : { "64" : "ami-0c35c59eb1b61b047"},
-            "ap-southeast-1" : { "64" : "ami-0df10e53ecf9715b1"},
-            "ap-southeast-2" : { "64" : "ami-0d63bd883e07dcd1e"},
-            "ap-south-1" : { "64" : "ami-0a11732c71571cfe0"},
-            "ap-northeast-1" : { "64" : "ami-0e257bc476d3ab29f"},
-            "ap-northeast-2" : { "64" : "ami-028f940412b9012f2"},
-            "sa-east-1" : { "64" : "ami-04e13931d5525b127"}
+        "us-east-1" : { "64" : "ami-057d9930d8c1fbedc"},
+        "us-east-2" : { "64" : "ami-0dfeb4181439e69d0"},
+        "us-west-1" : { "64" : "ami-0a8c2164d78c0bbb8"},
+        "us-west-2" : { "64" : "ami-0025ed9e1b816d07c"},
+        "ca-central-1" : { "64" : "ami-09a9d56a27865baf3"},
+        "eu-central-1" : { "64" : "ami-0fbf47d12f4459525"},
+        "eu-west-1" : { "64" : "ami-0377a7427365b0a53"},
+        "eu-west-2" : { "64" : "ami-0f2c33e354084cea6"},
+        "eu-west-3" : { "64" : "ami-0589232054b7ee870"},
+        "eu-north-1" : { "64" : "ami-0c44d3d9cb57c6b9a"},
+        "ap-southeast-1" : { "64" : "ami-09e099ae028778169"},
+        "ap-southeast-2" : { "64" : "ami-0c68ca820e273e8ce"},
+        "ap-south-1" : { "64" : "ami-08d0f13c0a870e2b1 "},
+        "ap-northeast-1" : { "64" : "ami-012961ab8b3b10a64"},
+        "ap-northeast-2" : { "64" : "ami-02f4812b8b09fd029"},
+        "sa-east-1" : { "64" : "ami-0a35d6f9ba46a595f"},
+        "us-gov-east-1"  : { "64" : "ami-5cac432d"},
+        "us-gov-west-1"  : { "64" : "ami-fb320e9a"}
         }
     },
     "Resources": {
@@ -222,62 +206,84 @@
                 "Path": "/",
                 "Policies": [
                     {
-                        "PolicyName": "WorkloadSetup",
-                        "PolicyDocument": {
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "cloudwatch:PutMetricData",
-                                        "cloudwatch:EnableAlarmActions",
-                                        "cloudwatch:PutMetricAlarm"
-                                    ],
-                                    "Resource": "*"
-                                },
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "s3:*"
-                                    ],
-                                    "Resource": [
-                                        {
-                                            "Fn::Join": [
-                                                "",
-                                                [
-                                                    "arn:aws:s3:::",
-                                                    {
-                                                        "Fn::If": [
-                                                            "CreateS3Bucket",
-                                                            {"Ref": "S3Bucket"},
-                                                            {"Ref": "S3BucketName"}
-                                                        ]
-
-                                                    },
-                                                    ""
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "Fn::Join": [
-                                                "",
-                                                [
-                                                    "arn:aws:s3:::",
-                                                    {
-                                                        "Fn::If": [
-                                                            "CreateS3Bucket",
-                                                            {"Ref": "S3Bucket"},
-                                                            {"Ref": "S3BucketName"}
-                                                        ]
-
-                                                    },
-                                                    "/*"
-                                                ]
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
+                       "PolicyName":"WorkloadSetup",
+                       "PolicyDocument":{
+                          "Statement":[
+                             {
+                                "Effect":"Allow",
+                                "Action":[
+                                   "cloudwatch:PutMetricData",
+                                   "cloudwatch:EnableAlarmActions",
+                                   "cloudwatch:PutMetricAlarm"
+                                ],
+                                "Resource":"*"
+                             },
+                             {
+                                "Effect":"Allow",
+                                "Action":[
+                                   "s3:*"
+                                ],
+                                "Resource":[
+                                   {
+                                      "Fn::Join":[
+                                         "",
+                                         [
+                                            "arn:",
+                                            {
+                                               "Fn::If":[
+                                                  "GovCloudRegion",
+                                                  "aws-us-gov",
+                                                  "aws"
+                                               ]
+                                            },
+                                            ":s3:::",
+                                            {
+                                               "Fn::If":[
+                                                  "CreateS3Bucket",
+                                                  {
+                                                     "Ref":"S3Bucket"
+                                                  },
+                                                  {
+                                                     "Ref":"S3BucketName"
+                                                  }
+                                               ]
+                                            },
+                                            ""
+                                         ]
+                                      ]
+                                   },
+                                   {
+                                      "Fn::Join":[
+                                         "",
+                                         [
+                                            "arn:",
+                                            {
+                                               "Fn::If":[
+                                                  "GovCloudRegion",
+                                                  "aws-us-gov",
+                                                  "aws"
+                                               ]
+                                            },
+                                            ":s3:::",
+                                            {
+                                               "Fn::If":[
+                                                  "CreateS3Bucket",
+                                                  {
+                                                     "Ref":"S3Bucket"
+                                                  },
+                                                  {
+                                                     "Ref":"S3BucketName"
+                                                  }
+                                               ]
+                                            },
+                                            "/*"
+                                         ]
+                                      ]
+                                   }
+                                ]
+                             }
+                          ]
+                       }
                     },
                     {
                         "PolicyName": "JRSRolePolicy",
@@ -363,13 +369,15 @@
 
                 },
                 "Restart" : {
-                  "services" : {
-                    "tomcat8" : {
-                      "enabled" : "true",
-                      "ensureRunning" : "true",
-                      "commands" : ["1-setInitialPassword","2-disableAndExpireUsers","3-pullLicense","4-pullCustomizations","5-WriteInitializationMarker"]
+                  "sysvinit" : {
+                    "services" : {
+                      "tomcat8" : {
+                        "enabled" : "true",
+                        "ensureRunning" : "true",
+                        "commands" : ["1-setInitialPassword","2-disableAndExpireUsers","3-pullLicense","4-pullCustomizations","5-WriteInitializationMarker"]
+                      }
                     }
-                  }
+				  }
                 }
               }
             },
@@ -459,7 +467,6 @@
             "Type": "AWS::S3::Bucket",
             "Condition" : "CreateS3Bucket",
             "Properties": {
-                "BucketName" : { "Ref": "S3BucketName" },
                 "AccessControl": "BucketOwnerFullControl"
             },
             "DeletionPolicy" : "Retain"
