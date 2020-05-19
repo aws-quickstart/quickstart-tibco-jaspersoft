@@ -110,16 +110,12 @@
         "BastionSecurityGroupID": {
             "Description": "ID of the bastion host security group to enable SSH connections (e.g., sg-7f16e910).",
             "Type": "AWS::EC2::SecurityGroup::Id",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
 
         },
         "KeyPairName": {
             "Description": "Name of an existing EC2 key pair, which allows you to securely connect to your instance after it launches.",
             "Type": "AWS::EC2::KeyPair::KeyName",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
         },
         "OperatorEmail": {
@@ -131,36 +127,26 @@
         "PrivateSubnet1ID": {
             "Description": "ID of private subnet 1 in Availability Zone 1 for the TIBCO JasperReports Servers (e.g., subnet-a0246dcd).",
             "Type": "AWS::EC2::Subnet::Id",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
         },
         "PrivateSubnet2ID": {
             "Description": "ID of private subnet 2 in Availability Zone 2 for the TIBCO JasperReports Servers (e.g., subnet-b1f432cd).",
             "Type": "AWS::EC2::Subnet::Id",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
         },
         "PublicSubnet1ID": {
             "Description": "ID of public subnet 1 in Availability Zone 1 for the Application Load Balancer (e.g., subnet-9bc642ac).",
             "Type": "AWS::EC2::Subnet::Id",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
         },
         "PublicSubnet2ID": {
             "Description": "ID of public subnet 2 in Availability Zone 2 for the Application Load Balancer (e.g., subnet-e3246d8e).",
             "Type": "AWS::EC2::Subnet::Id",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
         },
         "VPCID": {
             "Description": "ID of your existing VPC for deployment.",
             "Type": "AWS::EC2::VPC::Id",
-            "MinLength": "1",
-            "MaxLength": "64",
             "ConstraintDescription" : "Required"
         },
         "WorkloadInstanceType": {
@@ -336,7 +322,7 @@
             "Properties" : {
                 "Handle" : { "Ref" : "RDSInitJrsDBWaitHandle" },
                 "Timeout" : "1800",
-                "Count" : "1"
+                "Count" : 1
             }
         },
         "NotificationTopic": {
@@ -364,14 +350,14 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": 80,
+                        "ToPort": 80,
                         "CidrIp": "0.0.0.0/0"
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "443",
-                        "ToPort": "443",
+                        "FromPort": 443,
+                        "ToPort": 443,
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
@@ -405,7 +391,7 @@
                     "TargetGroupArn" : { "Ref" : "WorkloadTargetGroup" }
                 }],
                 "LoadBalancerArn" : { "Ref" : "ElasticLoadBalancer" },
-                "Port" : "80",
+                "Port" : 80,
                 "Protocol" : "HTTP"
             }
         },
@@ -414,7 +400,7 @@
             "Properties" : {
                 "HealthCheckIntervalSeconds" : 90,
                 "HealthCheckPath" : "/jasperserver-pro/login.html",
-                "HealthCheckPort" : 80,
+                "HealthCheckPort" : "80",
                 "HealthCheckProtocol" : "HTTP",
                 "HealthCheckTimeoutSeconds" : 15,
                 "HealthyThresholdCount" : 2,
@@ -614,14 +600,13 @@
                     }
                 }
             },
-            "Version": "2018-11-20",
             "Properties": {
                 "InstanceInitiatedShutdownBehavior" : "stop",
                 "ImageId": {"Fn::FindInMap" : [ "AWSAMIRegionMap", { "Ref" : "AWS::Region" }, "64" ]},
                 "InstanceType": { "Ref" : "WorkloadInstanceType" },
                 "KeyName" : { "Ref" : "KeyPairName" },
-                "Monitoring": "false",
-                "DisableApiTermination": "false",
+                "Monitoring": false,
+                "DisableApiTermination": false,
                 "SecurityGroupIds": [{ "Ref": "WorkloadSecurityGroup"}],
                 "SubnetId" : {"Ref": "PrivateSubnet1ID" },
                 "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
@@ -656,24 +641,24 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": 80,
+                        "ToPort": 80,
                         "SourceSecurityGroupId": {
                             "Ref": "ELBSecurityGroup"
                         }
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "443",
-                        "ToPort": "443",
+                        "FromPort": 443,
+                        "ToPort": 443,
                         "SourceSecurityGroupId": {
                             "Ref": "ELBSecurityGroup"
                         }
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "22",
-                        "ToPort": "22",
+                        "FromPort": 22,
+                        "ToPort": 22,
                         "SourceSecurityGroupId": {
                             "Ref": "BastionSecurityGroupID"
                         }
@@ -686,8 +671,8 @@
             "Properties": {
                 "GroupId" : { "Fn::GetAtt": ["WorkloadSecurityGroup","GroupId"] },
                 "IpProtocol" : "tcp",
-                "FromPort" : "61616",
-                "ToPort" : "61616",
+                "FromPort" : 61616,
+                "ToPort" : 61616,
                 "SourceSecurityGroupId" : { "Fn::GetAtt": ["WorkloadSecurityGroup","GroupId"] }
             },
             "DependsOn" : "RDSInitWaitCondition"
@@ -791,7 +776,7 @@
                         "64"
                     ]
                 },
-                "InstanceMonitoring": "true",
+                "InstanceMonitoring": true,
                 "IamInstanceProfile": {
                     "Ref": "SetupRoleProfile"
                 },
@@ -842,7 +827,7 @@
                     "Ref": "WorkloadAutoScalingGroup"
                 },
                 "Cooldown": "300",
-                "ScalingAdjustment": "1"
+                "ScalingAdjustment": 1
             }
         },
         "WorkloadScaleDownPolicy": {
@@ -853,7 +838,7 @@
                     "Ref": "WorkloadAutoScalingGroup"
                 },
                 "Cooldown": "300",
-                "ScalingAdjustment": "-1"
+                "ScalingAdjustment": -1
             }
         },
         "CPUAlarmHigh": {
@@ -863,9 +848,9 @@
                 "MetricName": "CPUUtilization",
                 "Namespace": "AWS/EC2",
                 "Statistic": "Average",
-                "Period": "60",
-                "EvaluationPeriods": "5",
-                "Threshold": "60",
+                "Period": 60,
+                "EvaluationPeriods": 5,
+                "Threshold": 60,
                 "AlarmActions": [
                     {
                         "Ref": "WorkloadScaleUpPolicy"
@@ -889,9 +874,9 @@
                 "MetricName": "CPUUtilization",
                 "Namespace": "AWS/EC2",
                 "Statistic": "Average",
-                "Period": "60",
-                "EvaluationPeriods": "30",
-                "Threshold": "40",
+                "Period": 60,
+                "EvaluationPeriods": 30,
+                "Threshold": 40,
                 "AlarmActions": [
                     {
                         "Ref": "WorkloadScaleDownPolicy"
@@ -923,7 +908,7 @@
                 "DesiredCapacity": {
                     "Ref": "WorkloadNodesDesiredCapacity"
                 },
-                "HealthCheckGracePeriod": "600",
+                "HealthCheckGracePeriod": 600,
                 "HealthCheckType": "EC2",
                 "LaunchConfigurationName": {
                     "Ref": "WorkloadASLaunchConfig"
@@ -955,7 +940,7 @@
                         "Value": {
                             "Fn::Sub": "${AWS::StackName}-JasperReports Server"
                         },
-                        "PropagateAtLaunch": "true"
+                        "PropagateAtLaunch": true
                     }
                 ]
             },
