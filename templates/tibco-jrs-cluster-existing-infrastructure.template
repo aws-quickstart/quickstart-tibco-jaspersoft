@@ -225,7 +225,7 @@
         "RDSPort" : {
             "Description" : "RDS Port",
             "Type" : "Number",
-			"Default" : "5432",
+            "Default" : "5432",
             "MinValue" : "1024",
             "ConstraintDescription" : "Port number should be higher than 1024"
         },
@@ -323,7 +323,7 @@
         "sa-east-1" : { "64" : "ami-0a35d6f9ba46a595f"},
         "us-gov-east-1"  : { "64" : "ami-5cac432d"},
         "us-gov-west-1"  : { "64" : "ami-fb320e9a"}
-	}
+    }
     },
     "Resources": {
         "RDSInitJrsDBWaitHandle" : {
@@ -600,7 +600,7 @@
                                 "enabled" : "false",
                                 "ensureRunning" : "false"
                             }
-						  }
+                        }
                         }
                     },
                     "Initialize" : {
@@ -742,9 +742,7 @@
                                 "owner" : "tomcat",
                                 "group" : "tomcat"
                             }
-
                         },
-
                         "commands" : {
                           "1-pullLicense" : {
                             "command" : { "Fn::Join" : ["", ["/usr/bin/aws --region ",{ "Ref": "AWS::Region" }," s3 cp s3://",{"Fn::If": ["CreateS3Bucket",{"Ref": "S3Bucket"},{"Ref": "S3BucketName"}]},"/jasperserver.license /var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/jasperserver.license"]]},
@@ -766,7 +764,6 @@
                           }
                         }
                    },
-    
                    "Restart" : {
                         "sysvinit" : {
                             "services" : {
@@ -779,7 +776,7 @@
                             }
                         }
                    }
-				}
+                }
              },
             "Properties": {
                 "KeyName": {
@@ -828,7 +825,6 @@
                     "\n",
                     "#!/bin/bash -xe\n",
                     "yum install -y aws-cfn-bootstrap\n",
-
                     "# Install the files and packages from the metadata\n",
                     "/opt/aws/bin/cfn-init ",
                     "         --stack ", { "Ref" : "AWS::StackName" },
@@ -957,8 +953,8 @@
                     {
                         "Key": "Name",
                         "Value": {
-							"Fn::Sub": "${AWS::StackName}-JasperReports Server"
-						},
+                            "Fn::Sub": "${AWS::StackName}-JasperReports Server"
+                        },
                         "PropagateAtLaunch": "true"
                     }
                 ]

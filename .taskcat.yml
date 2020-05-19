@@ -1,21 +1,29 @@
 project:
   owner: Jaspersoft-QA-Team
-  name: jrs-taskcat
-# s3_bucket - name of S3 bucket to upload project to, if left out a bucket will be auto-generated. Set to "aws-quickstart" for AWS hosted S3 setup
-  s3_bucket: qafasttestnew
+  name: quickstart-tibco-jaspersoft
+# s3_bucket - name of S3 bucket to upload project to, if left out a bucket will be auto-generated
+  s3_bucket: ""
   tags:
-    Purpose: Jaspersoft-QA-Automatic-Test
+    Purpose: QA-Automatic-Test
   parameters:
 #   === QS == template parameters
-#   QSS3KeyPrefix - mirrors the 'name' of the project. Set to "quickstart-tibco-jaspersoft/" for AWS hosted S3 setup
-    QSS3KeyPrefix: jrs-taskcat/
+    QSS3KeyPrefix: quickstart-tibco-jaspersoft/
     RemoteAccessCIDR: 71.83.113.151/32
 #   QSS3BucketName - contains QS project code with dependencies and templates
-    QSS3BucketName: qafasttestnew
+    QSS3BucketName: $[taskcat_autobucket]
     OperatorEmail: astoykov@tibco.com
+#   === MP === template parameters
+#   You need to create a VPC and Subnet first, and this is unique for every region
+#   default value for us-east-1
+    VpcId: vpc-b6a011cc
+#   default value for us-east-1
+    SubnetId: subnet-ccbdd8ab
+#   default value for us-east-1
+    DBHost: postgres-cluster-test.cwrx8wcx9oil.us-east-1.rds.amazonaws.com
+#   === Both QS & MP === parameters
     KeyPairName: astoykov_key
 #   S3BucketName - Purely customization S3 bucket
-    S3BucketName: qs-test3
+#    S3BucketName: qs-test3
   regions:
     - us-east-1
 #    - us-east-2
@@ -52,7 +60,6 @@ tests:
       PublicSubnet2CIDR: 10.0.144.0/20
       VPCCIDR: 10.0.0.0/16
       WorkloadInstanceType: m5.large
-
 
   test-qs-cluster-new-infra:
     regions:
