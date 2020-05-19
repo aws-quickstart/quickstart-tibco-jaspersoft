@@ -148,11 +148,11 @@
            "Description":"The Linux distribution for the AMI to be used for the bastion instances.",
            "Type":"String",
            "AllowedValues":[
-               "Amazon-Linux2-HVM",
-               "Amazon-Linux-HVM",
-               "CentOS-7-HVM",
-               "Ubuntu-Server-14.04-LTS-HVM",
-               "Ubuntu-Server-16.04-LTS-HVM"
+              "Amazon-Linux2-HVM",
+              "Amazon-Linux-HVM",
+              "CentOS-7-HVM",
+              "Ubuntu-Server-14.04-LTS-HVM",
+              "Ubuntu-Server-16.04-LTS-HVM"
            ],
            "Default":"Amazon-Linux2-HVM",
            "MinLength":"1",
@@ -337,8 +337,8 @@
     },
     "Conditions" : {
         "GovCloudRegion": { "Fn::Or" : [
-                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
-                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+            {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+            {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
             ]
         }
     },
@@ -348,16 +348,16 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
-                        {
-                            "QSS3Region": {
-                                "Fn::If": [
+                       "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
                                 "GovCloudRegion",
                                 "-us-gov-west-1",
                                 ""
-                                ]
-                            }
-                        }
+                             ]
+                          }
+                       }
                     ]
                 },
                 "Parameters": {
@@ -398,15 +398,15 @@
                 "TemplateURL": {
                     "Fn::Sub": [
                         "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
-                        {
-                            "QSS3Region": {
-                            "Fn::If": [
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
                                 "GovCloudRegion",
                                 "-us-gov-west-1",
                                 ""
-                                ]
-                            }
-                        }
+                             ]
+                          }
+                       }
                     ]
                 },
                 "Parameters": {
@@ -459,15 +459,15 @@
                 "TemplateURL": {
                     "Fn::Sub": [
                         "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/rds-postgres-cluster.template",
-                        {
-                            "QSS3Region": {
-                            "Fn::If": [
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
                                 "GovCloudRegion",
                                 "-us-gov-west-1",
                                 ""
-                                ]
-                            }
-                        }
+                             ]
+                          }
+                       }
                     ]
                 },
                 "Parameters": {
@@ -520,16 +520,16 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-cluster-existing-infrastructure.template",
-                        {
-                            "QSS3Region": {
-                            "Fn::If": [
+                       "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-cluster-existing-infrastructure.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
                                 "GovCloudRegion",
                                 "-us-gov-west-1",
                                 ""
-                                ]
-                            }
-                        }
+                             ]
+                          }
+                       }
                     ]
                 },
                 "Parameters": {

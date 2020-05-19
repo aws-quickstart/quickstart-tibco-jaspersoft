@@ -222,8 +222,8 @@
     },
     "Conditions" : {
         "GovCloudRegion": { "Fn::Or" : [
-            {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
-            {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
             ]
         }
     },
@@ -233,17 +233,17 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                    "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
-                        {
-                            "QSS3Region": {
-                            "Fn::If": [
-                            "GovCloudRegion",
-                            "-us-gov-west-1",
-                            ""
-                            ]
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/submodules/quickstart-aws-vpc/templates/aws-vpc.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
+                                "GovCloudRegion",
+                                "-us-gov-west-1",
+                                ""
+                             ]
                           }
                        }
-                   ]
+                    ]
                 },
                 "Parameters": {
                     "AvailabilityZones": {
@@ -282,16 +282,16 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                    "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
-                        {
-                            "QSS3Region": {
-                                "Fn::If": [
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
                                 "GovCloudRegion",
                                 "-us-gov-west-1",
                                 ""
-                                ]
-                            }
-                        }
+                             ]
+                          }
+                       }
                     ]
                 },
                 "Parameters": {
@@ -317,10 +317,10 @@
                         ]
                     },
                     "QSS3BucketRegion": {
-                    "Fn::If": [
-                        "GovCloudRegion",
-                        {"Ref": "AWS::Region"},
-                        {"Ref": "AWS::NoValue"}
+                        "Fn::If": [
+                            "GovCloudRegion",
+                            {"Ref": "AWS::Region"},
+                            {"Ref": "AWS::NoValue"}
                         ]
                     },
                     "RemoteAccessCIDR": {
@@ -344,16 +344,16 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                    "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-single-instance-existing-infrastructure.template",
-                        {
-                            "QSS3Region": {
-                                "Fn::If": [
+                        "https://${QSS3BucketName}.s3${QSS3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/tibco-jrs-single-instance-existing-infrastructure.template",
+                       {
+                          "QSS3Region": {
+                             "Fn::If": [
                                 "GovCloudRegion",
                                 "-us-gov-west-1",
                                 ""
-                                ]
-                            }
-                        }
+                             ]
+                          }
+                       }
                     ]
                 },
                 "Parameters": {
