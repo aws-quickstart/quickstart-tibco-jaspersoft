@@ -600,7 +600,7 @@
                                 "enabled" : "false",
                                 "ensureRunning" : "false"
                             }
-						  }
+                        }
                         }
                     },
                     "Initialize" : {
@@ -742,9 +742,7 @@
                                 "owner" : "tomcat",
                                 "group" : "tomcat"
                             }
-
                         },
-
                         "commands" : {
                           "1-pullLicense" : {
                             "command" : { "Fn::Join" : ["", ["/usr/bin/aws --region ",{ "Ref": "AWS::Region" }," s3 cp s3://",{"Fn::If": ["CreateS3Bucket",{"Ref": "S3Bucket"},{"Ref": "S3BucketName"}]},"/jasperserver.license /var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/jasperserver.license"]]},
@@ -766,7 +764,6 @@
                           }
                         }
                    },
-    
                    "Restart" : {
                         "sysvinit" : {
                             "services" : {
@@ -828,7 +825,6 @@
                     "\n",
                     "#!/bin/bash -xe\n",
                     "yum install -y aws-cfn-bootstrap\n",
-
                     "# Install the files and packages from the metadata\n",
                     "/opt/aws/bin/cfn-init ",
                     "         --stack ", { "Ref" : "AWS::StackName" },
