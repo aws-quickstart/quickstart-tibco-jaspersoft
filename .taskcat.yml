@@ -2,7 +2,7 @@ project:
   owner: Jaspersoft-QA-Team
   name: quickstart-tibco-jaspersoft
 # s3_bucket - name of S3 bucket to upload project to, if left out a bucket will be auto-generated
-  s3_bucket: qafasttestnew
+  s3_bucket: ""
   tags:
     Purpose: QA-Automatic-Test
   parameters:
@@ -23,7 +23,7 @@ project:
 #   === Both QS & MP === parameters
     KeyPairName: astoykov_key
 #   S3BucketName - Purely customization S3 bucket
-    S3BucketName: qs-test3
+#    S3BucketName: qs-test3
   regions:
     - us-east-1
 #    - us-east-2
