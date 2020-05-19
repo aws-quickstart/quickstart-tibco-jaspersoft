@@ -323,7 +323,7 @@
         "sa-east-1" : { "64" : "ami-0a35d6f9ba46a595f"},
         "us-gov-east-1"  : { "64" : "ami-5cac432d"},
         "us-gov-west-1"  : { "64" : "ami-fb320e9a"}
-	}
+    }
     },
     "Resources": {
         "RDSInitJrsDBWaitHandle" : {
