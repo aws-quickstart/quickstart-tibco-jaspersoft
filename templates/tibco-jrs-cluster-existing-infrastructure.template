@@ -225,7 +225,7 @@
         "RDSPort" : {
             "Description" : "RDS Port",
             "Type" : "Number",
-			"Default" : "5432",
+            "Default" : "5432",
             "MinValue" : "1024",
             "ConstraintDescription" : "Port number should be higher than 1024"
         },
