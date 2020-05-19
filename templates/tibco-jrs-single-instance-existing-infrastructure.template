@@ -144,11 +144,11 @@
                 ""
             ]
         },
-		"GovCloudRegion": { "Fn::Or" : [
-				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
-				{"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
-			]
-		}
+        "GovCloudRegion": { "Fn::Or" : [
+                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-west-1"]},
+                {"Fn::Equals": [{"Ref": "AWS::Region"},"us-gov-east-1"]}
+            ]
+        }
     },
     "Mappings": {
         "AWSAMIRegionMap": {
