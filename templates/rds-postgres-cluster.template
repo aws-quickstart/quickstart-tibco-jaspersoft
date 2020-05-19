@@ -45,23 +45,18 @@
         "VPCID" : {
             "Description" : "VpcId of your existing Virtual Private Cloud (VPC)",
             "Type" : "AWS::EC2::VPC::Id",
-            "MinLength": "1",
-            "MaxLength": "64"
         },
         "PrivateSubnet1ID": {
             "Description": "ID of private subnet 1 in Availability Zone 1 for the Workload (e.g., subnet-a0246dcd)",
             "Type": "AWS::EC2::Subnet::Id",
-            "MinLength": "1"
         },
         "PrivateSubnet2ID": {
             "Description": "ID of private subnet 2 in Availability Zone 2 for the Workload (e.g., subnet-b1f432cd)",
             "Type": "AWS::EC2::Subnet::Id",
-            "MinLength": "1"
         },
         "AvailabilityZones": {
             "Description": "List of Availability Zones to use for the subnets in the VPC. Only two Availability Zones are used for this deployment, and the logical order of your selections is preserved.",
             "Type": "List<AWS::EC2::AvailabilityZone::Name>",
-            "MinLength": "1"
         },
         "VPCCIDR": {
             "Description": "CIDR block for accessing RDS",
@@ -88,8 +83,8 @@
                 "VpcId" : { "Ref" : "VPCID" },
                 "SecurityGroupIngress": [
                     { "IpProtocol": "tcp",
-                        "FromPort": "5432",
-                        "ToPort": "5432",
+                        "FromPort": 5432,
+                        "ToPort": 5432,
                         "CidrIp": {
                             "Ref": "VPCCIDR"
                         }
@@ -101,7 +96,7 @@
         "RDSDb" : {
             "Type" : "AWS::RDS::DBInstance",
             "Properties" : {
-                "MultiAZ" : {"Fn::If" : ["RDSMultiAzDeployment","true",{"Ref": "AWS::NoValue"}]},
+                "MultiAZ" : {"Fn::If" : ["RDSMultiAzDeployment",true,{"Ref": "AWS::NoValue"}]},
                 "AvailabilityZone" : {"Fn::If" : ["RDSMultiAzDeployment",{"Ref": "AWS::NoValue"},{"Fn::Select" : ["0",{"Ref" : "AvailabilityZones"}]}]},
                 "VPCSecurityGroups": [{ "Ref": "VPCDBSecurityGroup" }],
                 "DBSubnetGroupName" : { "Ref": "RDSSubnetGroup" },
@@ -142,7 +137,5 @@
                 }
             }
         }
-
-
     }
 }
