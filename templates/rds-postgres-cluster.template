@@ -11,11 +11,12 @@
     },
     "Parameters" : {
         "RDSDbSize": {
-            "Description" : "Must be one of the following valid RDS instance types (db.m3.medium | db.m3.large | db.m3.xlarge).",
+            "Description" : "The instance type for the RDS database for the JasperReports Server repository.",
             "Type" : "String",
             "Default" : "db.t2.medium",
-            "AllowedValues" : [ "db.t2.small","db.t2.medium","db.t2.large","db.m4.large","db.m4.xlarge","db.m4.2xlarge"],
-            "ConstraintDescription" : "Must be one of the following valid RDS instance types ( db.t2.small | db.t2.medium | db.t2.large | db.m4.large | db.m4.xlarge | db.m4.2xlarge)."
+            "MinLength": "1",
+            "AllowedValues" : [ "db.m5.large", "db.m5.xlarge", "db.m5.2xlarge","db.t2.medium","db.t2.large", "db.t2.xlarge", "db.t2.2xlarge"],
+            "ConstraintDescription" : "Must be one of the RDS instance types."
         },
         "RDSUser" : {
             "Description" : "Master User Name for RDS database",
@@ -35,36 +36,34 @@
             "ConstraintDescription" : "It can contain only alphanumeric characters and underscores."
         },
         "RDSMultiAz" : {
-            "Type" : "String",
             "Description": "Should RDS database be created in MultiAZ configuration",
+            "Type" : "String",
             "Default": "true",
             "AllowedValues" : ["true","false"],
             "ConstraintDescription": "Value must be true or false"
         },
         "VPCID" : {
-            "Type" : "AWS::EC2::VPC::Id",
             "Description" : "VpcId of your existing Virtual Private Cloud (VPC)",
-            "MinLength": "1",
-            "MaxLength": "64"
+            "Type" : "AWS::EC2::VPC::Id",
         },
         "PrivateSubnet1ID": {
             "Description": "ID of private subnet 1 in Availability Zone 1 for the Workload (e.g., subnet-a0246dcd)",
-            "Type": "AWS::EC2::Subnet::Id"
+            "Type": "AWS::EC2::Subnet::Id",
         },
         "PrivateSubnet2ID": {
             "Description": "ID of private subnet 2 in Availability Zone 2 for the Workload (e.g., subnet-b1f432cd)",
-            "Type": "AWS::EC2::Subnet::Id"
+            "Type": "AWS::EC2::Subnet::Id",
         },
         "AvailabilityZones": {
             "Description": "List of Availability Zones to use for the subnets in the VPC. Only two Availability Zones are used for this deployment, and the logical order of your selections is preserved.",
-            "Type": "List<AWS::EC2::AvailabilityZone::Name>"
+            "Type": "List<AWS::EC2::AvailabilityZone::Name>",
         },
         "VPCCIDR": {
-            "AllowedPattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$",
-            "ConstraintDescription": "CIDR block parameter must be in the form x.x.x.x/16-28",
-            "Default": "10.0.0.0/16",
             "Description": "CIDR block for accessing RDS",
-            "Type": "String"
+            "Type": "String",
+            "Default": "10.0.0.0/16",
+            "AllowedPattern": "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$",
+            "ConstraintDescription": "CIDR block parameter must be in the form x.x.x.x/16-28"
         }
     },
     "Conditions" : {
@@ -84,8 +83,8 @@
                 "VpcId" : { "Ref" : "VPCID" },
                 "SecurityGroupIngress": [
                     { "IpProtocol": "tcp",
-                        "FromPort": "5432",
-                        "ToPort": "5432",
+                        "FromPort": 5432,
+                        "ToPort": 5432,
                         "CidrIp": {
                             "Ref": "VPCCIDR"
                         }
@@ -97,7 +96,7 @@
         "RDSDb" : {
             "Type" : "AWS::RDS::DBInstance",
             "Properties" : {
-                "MultiAZ" : {"Fn::If" : ["RDSMultiAzDeployment","true",{"Ref": "AWS::NoValue"}]},
+                "MultiAZ" : {"Fn::If" : ["RDSMultiAzDeployment",true,{"Ref": "AWS::NoValue"}]},
                 "AvailabilityZone" : {"Fn::If" : ["RDSMultiAzDeployment",{"Ref": "AWS::NoValue"},{"Fn::Select" : ["0",{"Ref" : "AvailabilityZones"}]}]},
                 "VPCSecurityGroups": [{ "Ref": "VPCDBSecurityGroup" }],
                 "DBSubnetGroupName" : { "Ref": "RDSSubnetGroup" },
@@ -138,7 +137,5 @@
                 }
             }
         }
-
-
     }
 }

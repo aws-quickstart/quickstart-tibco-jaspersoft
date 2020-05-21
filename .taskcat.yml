@@ -1,0 +1,78 @@
+project:
+  owner: Jaspersoft-QA-Team
+  name: quickstart-tibco-jaspersoft
+# s3_bucket - name of S3 bucket to upload project to, if left out a bucket will be auto-generated
+  s3_bucket: ""
+  tags:
+    Purpose: QA-Automatic-Test
+  parameters:
+#   === QS == template parameters
+    QSS3KeyPrefix: quickstart-tibco-jaspersoft/
+    RemoteAccessCIDR: 71.83.113.151/32
+#   QSS3BucketName - contains QS project code with dependencies and templates
+    QSS3BucketName: $[taskcat_autobucket]
+    OperatorEmail: astoykov@tibco.com
+    KeyPairName: astoykov_key
+#   S3BucketName - Purely customization S3 bucket
+    S3BucketName: qs-test3
+  regions:
+    - us-east-1
+#    - us-east-2
+#    - us-west-1
+#    - us-west-2
+#    - ca-central-1
+#    - ap-south-1
+#    - ap-northeast-1
+#    - ap-northeast-2
+#    - ap-southeast-1
+#    - ap-southeast-2
+#    - eu-west-1
+#    - eu-west-2
+#    - eu-west-3
+#    - eu-central-1
+#    - eu-north-1
+#    - sa-east-1
+
+tests:
+
+  test-qs-si-new-infra:
+    regions:
+      - us-west-2
+    tags:
+      Test-Name: Single Instance New Infrastructure Template Test
+    template: ./templates/tibco-jrs-single-instance-new-infrastructure.template
+    parameters:
+      AvailabilityZones: $[taskcat_genaz_2]
+      BastionAMIOS: Amazon-Linux-HVM
+      BastionInstanceType: t3.micro
+      PrivateSubnet1CIDR: 10.0.0.0/19
+      PrivateSubnet2CIDR: 10.0.32.0/19
+      PublicSubnet1CIDR: 10.0.128.0/20
+      PublicSubnet2CIDR: 10.0.144.0/20
+      VPCCIDR: 10.0.0.0/16
+      WorkloadInstanceType: m5.large
+
+  test-qs-cluster-new-infra:
+    regions:
+      - us-east-1
+    tags:
+      Test-Name: Cluster New Infrastructure Template Test
+    template: ./templates/tibco-jrs-cluster-new-infrastructure.template
+    parameters:
+      AvailabilityZones: $[taskcat_genaz_2]
+      BastionAMIOS: Amazon-Linux-HVM
+      BastionInstanceType: t3.micro
+      PrivateSubnet1CIDR: 10.0.0.0/19
+      PrivateSubnet2CIDR: 10.0.32.0/19
+      PublicSubnet1CIDR: 10.0.128.0/20
+      PublicSubnet2CIDR: 10.0.144.0/20
+      VPCCIDR: 10.0.0.0/16
+      RDSDbSize: db.t2.medium
+      RDSUser: postgres
+      RDSPassword: postgres
+      DBName: jasperserver
+      IncludeSamples: 'Yes'
+      WorkloadNodesMaxSize: 2
+      WorkloadNodesMinSize: 1
+      WorkloadNodesDesiredCapacity: 1
+      WorkloadInstanceType: m5.large
