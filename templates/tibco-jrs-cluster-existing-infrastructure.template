@@ -291,10 +291,10 @@
     },
     "Mappings": {
         "AWSAMIRegionMap": {
-        "us-east-1" : { "64" : "ami-057d9930d8c1fbedc"},
+        "us-east-1" : { "64" : "ami-0825d74029a15a92e"},
         "us-east-2" : { "64" : "ami-0dfeb4181439e69d0"},
         "us-west-1" : { "64" : "ami-0a8c2164d78c0bbb8"},
-        "us-west-2" : { "64" : "ami-0025ed9e1b816d07c"},
+        "us-west-2" : { "64" : "ami-01a0e40a73b359d86"},
         "ca-central-1" : { "64" : "ami-09a9d56a27865baf3"},
         "eu-central-1" : { "64" : "ami-0fbf47d12f4459525"},
         "eu-west-1" : { "64" : "ami-0377a7427365b0a53"},
