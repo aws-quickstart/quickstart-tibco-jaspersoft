@@ -276,9 +276,9 @@
             "Description": "Amazon EC2 instance type for the TIBCO JasperReports Server instances.. Has to be available for the deployment region.",
             "Type": "String",
             "AllowedValues": [
-                "m4.large","m4.xlarge","m4.2xlarge","m4.4xlarge","m4.10xlarge","r3.xlarge","r3.2xlarge","c4.xlarge","c4.2xlarge","m5.large"
+                "m5a.large","m5a.xlarge","m5a.2xlarge","m5a.4xlarge","m5a.8xlarge","r5.xlarge","r5.2xlarge","c4.xlarge","c4.2xlarge","m5.large"
             ],
-            "Default": "m4.xlarge",
+            "Default": "m5a.xlarge",
             "MinLength": "1",
             "ConstraintDescription": "Must contain valid instance type."
         },
