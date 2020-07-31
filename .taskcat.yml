@@ -50,7 +50,6 @@ tests:
     template: ./templates/tibco-jrs-single-instance-new-infrastructure.template
     parameters:
       AvailabilityZones: $[taskcat_genaz_2]
-      BastionAMIOS: Amazon-Linux-HVM
       BastionInstanceType: t3.micro
       PrivateSubnet1CIDR: 10.0.0.0/19
       PrivateSubnet2CIDR: 10.0.32.0/19
@@ -65,7 +64,6 @@ tests:
     template: ./templates/tibco-jrs-cluster-new-infrastructure.template
     parameters:
       AvailabilityZones: $[taskcat_genaz_2]
-      BastionAMIOS: Amazon-Linux-HVM
       BastionInstanceType: t3.micro
       PrivateSubnet1CIDR: 10.0.0.0/19
       PrivateSubnet2CIDR: 10.0.32.0/19
