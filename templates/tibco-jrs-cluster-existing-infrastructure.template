@@ -590,8 +590,8 @@
                                 ]]},
                                 "encoding" : "plain",
                                 "mode" : "000644",
-                                "owner" : "tomcat",
-                                "group" : "tomcat"
+                                "owner" : "root",
+                                "group" : "root"
                             }
                         },
                         "services" : {
@@ -625,8 +625,27 @@
                 "SecurityGroupIds": [{ "Ref": "WorkloadSecurityGroup"}],
                 "SubnetId" : {"Ref": "PrivateSubnet1ID" },
                 "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
+                    "Content-Type: multipart/mixed; boundary=\"//\"\n",
+                    "MIME-Version: 1.0\n",
+                    "\n",
+                    "--//\n",
+                    "Content-Type: text/cloud-config; charset=\"us-ascii\"\n",
+                    "MIME-Version: 1.0\n",
+                    "Content-Transfer-Encoding: 7bit\n",
+                    "Content-Disposition: attachment; filename=\"cloud-config.txt\"\n",
+                    "\n",
+                    "#cloud-config\n",
+                    "cloud_final_modules:\n",
+                    "- [scripts-user, always]\n",
+                    "\n",
+                    "--//\n",
+                    "Content-Type: text/x-shellscript; charset=\"us-ascii\"\n",
+                    "MIME-Version: 1.0\n",
+                    "Content-Transfer-Encoding: 7bit\n",
+                    "Content-Disposition: attachment; filename=\"userdata.txt\"\n",
+                    "\n",
                     "#!/bin/bash -xe\n",
-                    "yum update aws-cfn-bootstrap\n",
+                    "yum install -y aws-cfn-bootstrap\n",
 
                     "# Install the files and packages from the metadata\n",
                     "/opt/aws/bin/cfn-init ",
@@ -724,8 +743,8 @@
                                 },
                                 "encoding" : "plain",
                                 "mode" : "000644",
-                                "owner" : "tomcat",
-                                "group" : "tomcat"
+                                "owner" : "root",
+                                "group" : "root"
                             },
                             "/var/lib/tomcat8/webapps/jasperserver-pro/WEB-INF/js.aws.properties" : {
                                 "content" : {
@@ -739,8 +758,8 @@
                                 },
                                 "encoding" : "plain",
                                 "mode" : "000644",
-                                "owner" : "tomcat",
-                                "group" : "tomcat"
+                                "owner" : "root",
+                                "group" : "root"
                             }
                         },
                         "commands" : {
