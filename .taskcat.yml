@@ -50,27 +50,3 @@ tests:
       PublicSubnet2CIDR: 10.0.144.0/20
       VPCCIDR: 10.0.0.0/16
       WorkloadInstanceType: m5.large
-
-  test-qs-cluster-new-infra:
-    regions:
-      - us-east-1
-    tags:
-      Test-Name: Cluster New Infrastructure Template Test
-    template: ./templates/tibco-jrs-cluster-new-infrastructure.template
-    parameters:
-      AvailabilityZones: $[taskcat_genaz_2]
-      BastionInstanceType: t3.micro
-      PrivateSubnet1CIDR: 10.0.0.0/19
-      PrivateSubnet2CIDR: 10.0.32.0/19
-      PublicSubnet1CIDR: 10.0.128.0/20
-      PublicSubnet2CIDR: 10.0.144.0/20
-      VPCCIDR: 10.0.0.0/16
-      RDSDbSize: db.t2.medium
-      RDSUser: postgres
-      RDSPassword: postgres
-      DBName: jasperserver
-      IncludeSamples: 'Yes'
-      WorkloadNodesMaxSize: 2
-      WorkloadNodesMinSize: 1
-      WorkloadNodesDesiredCapacity: 1
-      WorkloadInstanceType: m5.large
