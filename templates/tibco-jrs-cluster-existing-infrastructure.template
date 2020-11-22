@@ -746,6 +746,8 @@
                                             "/bin/cp -rf /usr/share/jrs_dist/clusterConfig/*",
                                             "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/ &&",
                                             "sed -i -r \"s/(.*)(sysProperties,transactionManagerConfiguration)(.*)/\\1\\2,broker-1\\3/\"",
+					    "sed -Ei s/awsEc2MetadataClient.+queueName.+/awsJmsConfiguration[js.aws.jms.queueName]\"}\/>/ /usr/share/jrs_dist/cloudConfig/applicationContext-jms.xml",
+					    "sed -Ei s/'sqs.+/awsJmsConfiguration['js.aws.jms.endpoint']}\" \/>/ /usr/share/jrs_dist/cloudConfig/applicationContext-jms.xml",
                                             "/var/lib/tomcat/webapps/jasperserver-pro/WEB-INF/applicationContext.xml"]]},
                             "ignoreErrors" : "false"
                           }
