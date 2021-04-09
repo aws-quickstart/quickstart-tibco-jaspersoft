@@ -1,0 +1,39 @@
+---
+region: us-east-1
+version: 2021-03-15
+resources:
+  - name: qs-tibco-jaspersoft-1
+    resource_file: s3://aws-quickstart/quickstart-tibco-jaspersoft/templates/tibco-jrs-single-instance-new-infrastructure.template
+    parameters:
+    - parameter_key: RemoteAccessCIDR
+      parameter_value: 71.83.113.151/32
+    - parameter_key: AvailabilityZones
+      parameter_value: us-east-1a, us-east-1b
+    - parameter_key: S3BucketName
+      parameter_value: qs-test1212
+    - parameter_key: KeyPairName
+      parameter_value: aws-qs-tc-all
+    - parameter_key: BastionInstanceType
+      parameter_value: t3.micro
+    - parameter_key: QSS3BucketName
+      parameter_value: aws-quickstart
+    - parameter_key: QSS3KeyPrefix
+      parameter_value: quickstart-tibco-jaspersoft/
+    - parameter_key: PrivateSubnet1CIDR
+      parameter_value: 10.0.0.0/19
+    - parameter_key: PrivateSubnet2CIDR
+      parameter_value: 10.0.32.0/19
+    - parameter_key: PublicSubnet1CIDR
+      parameter_value: 10.0.128.0/20
+    - parameter_key: PublicSubnet2CIDR
+      parameter_value: 10.0.144.0/20
+    - parameter_key: VPCCIDR
+      parameter_value: 10.0.0.0/16
+    - parameter_key: WorkloadInstanceType
+      parameter_value: m5.large
+    deploy_method: stack_set
+    deployment_targets:
+      organizational_units:
+        - Workloads
+    regions:
+      - us-east-1
