@@ -27,7 +27,7 @@ In the following sections, you will review and update the settings in this file 
 
 ### Review the manifest.yaml file
 
-1. Navigate to the root directory of the {partner-product-short-name} Quick Start, and open the `manifest.yaml` file, located in the `ct` folder.
+1. Navigate to the root directory of the TIBCO JasperReports Server Quick Start, and open the `manifest.yaml` file, located in the `ct` folder.
 2. Confirm that the `region` attribute references the Region where AWS Control Tower is deployed. The default Region is us-east-1. You will update the `regions` attribute (located in the *resources* section) in a later step. 
 3. Confirm that the `resource_file` attribute points to the public S3 bucket for the TIBCO JasperReports Server Quick Start. Using a public S3 bucket ensures a consistent code base across the different deployment options. 
 
